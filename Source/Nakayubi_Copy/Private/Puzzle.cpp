@@ -17,6 +17,8 @@ APuzzle::APuzzle()
 		puzzleStatus[i] = false;
 	}
 
+	puzzleSolved = false;
+
 }
 
 // Called when the game starts or when spawned

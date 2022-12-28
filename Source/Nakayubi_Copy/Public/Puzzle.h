@@ -30,11 +30,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = PuzzleSettings)
 	TArray<bool> puzzlePart;
 
-	//bool puzzleSolved = false
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = PuzzleSettings)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = PuzzleStatus)
 	TArray<bool> puzzleStatus;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = PuzzleSettings)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = PuzzleStatus)
 	bool puzzleSolved;
 
 	bool CheckPuzzleStatus();
