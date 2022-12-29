@@ -6,6 +6,12 @@
 #include "GameFramework/Actor.h"
 #include "Puzzle1.generated.h"
 
+UENUM(BlueprintType)
+enum class EPuzzleState: uint8 {
+	Unchanged,
+	Changed
+};
+
 UCLASS()
 class NAKAYUBI_COPY_API APuzzle1 : public AActor
 {
@@ -28,9 +34,12 @@ public:
 
 	void ChangeMaterialColor();
 	void ChangeToOriginalColor();
+
+	EPuzzleState puzzleState;
 private:
 
 	FLinearColor initColor;
 	UMaterialInstanceDynamic* dynamicMat;
 
 };
+
