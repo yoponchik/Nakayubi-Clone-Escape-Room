@@ -47,10 +47,11 @@ void AMyPlayer::Tick(float DeltaTime)
 			//if (Cast<APuzzle1>(clickedActor)) {									//Either works
 #pragma region Debug
 
-				UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
+				//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
 #pragma endregion
 				APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor); 									//Either works
 				puzzle1->ChangeMaterialColor();
+				UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Done"));						//Need asterisk because need pointer to print out character
 			}
 			//change material
 		}

@@ -48,6 +48,8 @@ void APuzzle1::ChangeToOriginalColor() {
 
 void APuzzle1::ChangeMaterialColor() {
 	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)FLinearColor::Red);
+	UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Called"));						//Need asterisk because need pointer to print out character
+
 }
 
 
