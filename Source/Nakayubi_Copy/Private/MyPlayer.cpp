@@ -49,11 +49,11 @@ void AMyPlayer::Tick(float DeltaTime)
 
 				//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
 #pragma endregion
+				//change material
 				APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor); 									//Either works
 				puzzle1->ChangeMaterialColor();
-				UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Done"));						//Need asterisk because need pointer to print out character
+				UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Done (AMyPlayer::Tick)"));						//Need asterisk because need pointer to print out character
 			}
-			//change material
 		}
 	}
 }
