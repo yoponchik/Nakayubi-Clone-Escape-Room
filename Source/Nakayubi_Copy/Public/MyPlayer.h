@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "MyPlayer.generated.h"
 
+
 UCLASS()
 class NAKAYUBI_COPY_API AMyPlayer : public APawn
 {
@@ -28,11 +29,13 @@ public:
 
 	APlayerController* playerController;
 
-	bool isClicked;
-
+	bool isClicked;	
+	
 private:
 	void Click();
 	void UnClick();
 
 	class AActor* clickedActor;
+
+
 };

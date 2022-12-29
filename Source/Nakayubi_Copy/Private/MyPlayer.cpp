@@ -46,13 +46,30 @@ void AMyPlayer::Tick(float DeltaTime)
 			if (clickedActor->IsA<APuzzle1>()) {
 			//if (Cast<APuzzle1>(clickedActor)) {									//Either works
 #pragma region Debug
-
+				//Extracted Actor is APuzzle1 class
 				//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
 #pragma endregion
-				//change material
+
+				//if(count == 0)
+				//change State = Changed
 				APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor); 									//Either works
-				puzzle1->ChangeMaterialColor();
-				UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Done (AMyPlayer::Tick)"));						//Need asterisk because need pointer to print out character
+				puzzle1->puzzleState = EPuzzleState::Changed;
+
+				//if(count ==1)
+				//puzzle1->puzzleState = EPuzzleState::UnChanged;
+				//count = 0
+
+#pragma region Debug Switch
+				if (puzzle1->puzzleState == EPuzzleState::Unchanged) {
+					UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
+				}
+				else if (puzzle1->puzzleState == EPuzzleState::Changed) {
+					UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
+				}
+#pragma endregion
+#pragma region Debug
+				//UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Done (AMyPlayer::Tick)"));						//Need asterisk because need pointer to print out character
+#pragma endregion
 			}
 		}
 	}
@@ -79,5 +96,4 @@ void AMyPlayer::UnClick() {
 #pragma region Debug
 	//UE_LOG(LogTemp, Warning, TEXT("Click End"));
 #pragma endregion
-
 }
