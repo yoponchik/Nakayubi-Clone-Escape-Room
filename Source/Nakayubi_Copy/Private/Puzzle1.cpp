@@ -45,34 +45,22 @@ void APuzzle1::BeginPlay(){
 #pragma endregion
 
 #pragma region PuzzleState
-	puzzleState = EPuzzleState::Unchanged;
-
-	//switch (puzzleState) {
-	//	case EPuzzleState::Unchanged:
-	//		ChangeToOriginalColor();
-	//		break;
-	//	case EPuzzleState::Changed:
-	//		ChangeMaterialColor();
-	//		break;
-	//	default:
-	//		break;
-	//}
+	puzzle1State = EPuzzle1State::Unchanged;
 #pragma endregion
 
 #pragma region Debug Switch
-	if (puzzleState == EPuzzleState::Unchanged) {
-		UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
-	}
-	else if (puzzleState == EPuzzleState::Changed) {
-		UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
-	}
+	//if (puzzleState == EPuzzleState::Unchanged) {
+	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
+	//}
+	//else if (puzzleState == EPuzzleState::Changed) {
+	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
+	//}
 #pragma endregion
 
 }
 
 void APuzzle1::ChangeToOriginalColor() {
 	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)initColor);
-
 	#pragma region Debug 
 	UE_LOG(LogTemp, Warning, TEXT("ChangeToOriginalColor Called (APuzzle1::ChangeToOriginalColor)"));						//Need asterisk because need pointer to print out character
 	#pragma endregion
@@ -80,7 +68,6 @@ void APuzzle1::ChangeToOriginalColor() {
 
 void APuzzle1::ChangeMaterialColor() {
 	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)FLinearColor::Red);
-	
 #pragma region Debug 
 	UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Called (APuzzle1::ChangeMaterialColor)"));						//Need asterisk because need pointer to print out character
 #pragma endregion
@@ -92,16 +79,36 @@ void APuzzle1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	switch (puzzleState) {
-		case EPuzzleState::Unchanged:
-			ChangeToOriginalColor();
-			break;
-		case EPuzzleState::Changed:
-			ChangeMaterialColor();
-			break;
-		default:
-			break;
+	if (isClicked) {
+		ChangeMaterialColor();
+		UE_LOG(LogTemp, Warning, TEXT("isClicked"));						//Need asterisk because need pointer to print out character
 	}
+	else {
+		ChangeToOriginalColor();
+		UE_LOG(LogTemp, Warning, TEXT("isUnClicked"));						//Need asterisk because need pointer to print out character
+	}
+
+
+	//switch (puzzle1State) {
+	//	case EPuzzle1State::Unchanged:
+	//		ChangeToOriginalColor();
+	//		break;
+	//	case EPuzzle1State::Changed:
+	//		ChangeMaterialColor();
+	//		break;
+	//	default:
+	//		break;
+	//}
+
+
+#pragma region Debug Switch
+	//if (puzzle1->puzzleState == EPuzzleState::Unchanged) {
+	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
+	//}
+	//else if (puzzle1->puzzleState == EPuzzleState::Changed) {
+	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
+	//}
+#pragma endregion
 
 }
 

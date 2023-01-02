@@ -7,7 +7,7 @@
 #include "Puzzle1.generated.h"
 
 UENUM(BlueprintType)
-enum class EPuzzleState: uint8 {
+enum class EPuzzle1State: uint8 {
 	Unchanged,
 	Changed
 };
@@ -35,7 +35,10 @@ public:
 	void ChangeMaterialColor();
 	void ChangeToOriginalColor();
 
-	EPuzzleState puzzleState;
+	EPuzzle1State puzzle1State;
+
+	bool isClicked;
+
 private:
 
 	FLinearColor initColor;
