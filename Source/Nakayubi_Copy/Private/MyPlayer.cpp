@@ -4,6 +4,7 @@
 #include "MyPlayer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Puzzle1.h"
+#include "Puzzle2.h"
 
 
 // Sets default values
@@ -35,43 +36,15 @@ void AMyPlayer::Tick(float DeltaTime)
 
 	//If Hit result has the channel trace channel, if it is hit result...
 	if (playerController->GetHitResultUnderCursorByChannel(TraceChannel, true, hitResult)) {
-		if (isClicked) {
-		//Get the actor
-			clickedActor = hitResult.GetActor();
+
+		if (!isPlayerClicked) {return; }
+		clickedActor = hitResult.GetActor();									//if Clicked, get the actor
 #pragma region Debug
-			//Get Actor Name
-			//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
-#pragma endregion
-			//if puzzle 1 is clicked
-			if (clickedActor->IsA<APuzzle1>()) {
-			//if (Cast<APuzzle1>(clickedActor)) {									//Either works
-#pragma region Debug
-				//Extracted Actor is APuzzle1 class
-				//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
+		//Get Actor Name
+		//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
 #pragma endregion
 
-				//if(count == 0)
-				//change State = Changed
-				APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor); 									//Either works
-				puzzle1->puzzleState = EPuzzleState::Changed;
-
-				//if(count ==1)
-				//puzzle1->puzzleState = EPuzzleState::UnChanged;
-				//count = 0
-
-#pragma region Debug Switch
-				if (puzzle1->puzzleState == EPuzzleState::Unchanged) {
-					UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
-				}
-				else if (puzzle1->puzzleState == EPuzzleState::Changed) {
-					UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
-				}
-#pragma endregion
-#pragma region Debug
-				//UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Done (AMyPlayer::Tick)"));						//Need asterisk because need pointer to print out character
-#pragma endregion
-			}
-		}
+		CheckPuzzleType();
 	}
 }
 
@@ -85,15 +58,37 @@ void AMyPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 void AMyPlayer::Click() {
-	isClicked = true;
+	isPlayerClicked = true;
 #pragma region Debug
 	//UE_LOG(LogTemp, Warning, TEXT("Click"));
 #pragma endregion
 }
 
 void AMyPlayer::UnClick() {
-	isClicked = false;
+	isPlayerClicked = false;
 #pragma region Debug
 	//UE_LOG(LogTemp, Warning, TEXT("Click End"));
 #pragma endregion
+}
+
+void AMyPlayer::CheckPuzzleType()
+{
+	if (clickedActor->IsA<APuzzle1>()) {									//if clickedActor is puzzle1
+	//if (Cast<APuzzle1>(clickedActor)) {									//Either works
+#pragma region Debug
+			//Extracted Actor is APuzzle1 class
+		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+
+		APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor); 									//Either works
+		//puzzle1->puzzle1State = EPuzzle1State::Changed;
+		puzzle1->isClicked = !(puzzle1->isClicked);
+	}
+
+	if (clickedActor->IsA<APuzzle2>()) {									//if clickedActor is puzzle1
+
+		APuzzle2* puzzle2 = Cast<APuzzle2>(clickedActor); 									//Either works
+		//puzzle2->puzzle2State = EPuzzle2State::Changed;
+		puzzle2->isClicked = !(puzzle2->isClicked);
+	}
 }
