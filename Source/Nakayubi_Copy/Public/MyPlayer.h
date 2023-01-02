@@ -29,7 +29,7 @@ public:
 
 	APlayerController* playerController;
 
-	bool isClicked;	
+	bool isPlayerClicked;	
 	
 private:
 	void Click();
@@ -37,5 +37,6 @@ private:
 
 	class AActor* clickedActor;
 
+	void CheckPuzzleType();
 
 };
