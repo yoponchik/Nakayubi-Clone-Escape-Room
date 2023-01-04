@@ -30,19 +30,19 @@ public:
 
 	void AddPuzzle();
 
+	void UpdatePuzzle1State();
+
 	void CheckPuzzle1State();
 
-	UPROPERTY(EditAnywhere, Category = Puzzle)
-	int32 solveCount = 4;
+	UPROPERTY(VisibleAnywhere, Category = Puzzle)
+	TArray <bool> isPuzzle1Check;
 
 	UPROPERTY(VisibleAnywhere, Category = Puzzle)
-	bool isPuzzle1Solved = false;
+	bool isPuzzle1Solved;
 
 	//Deprecated
 	//UPROPERTY(EditAnywhere, Category = Puzzle)
 	//TArray <class AActor*> allActors;
-private:
 
-	int32 curCount = 0;
 
 };

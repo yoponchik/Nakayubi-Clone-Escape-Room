@@ -40,6 +40,7 @@ public:
 
 	//EPuzzle1State puzzle1State;
 #pragma endregion
+
 	UPROPERTY(EditAnywhere, Category = Puzzle)
 	bool isPuzzleActorState;
 

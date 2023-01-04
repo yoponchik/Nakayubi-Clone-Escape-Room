@@ -33,7 +33,7 @@ void APuzzle1::BeginPlay(){
 
 	#pragma region Puzzle Interaction
 
-	#pragma region Debug Switch
+	#pragma region Deprecated: Debug Switch
 	//if (puzzleState == EPuzzleState::Unchanged) {
 	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
 	//}

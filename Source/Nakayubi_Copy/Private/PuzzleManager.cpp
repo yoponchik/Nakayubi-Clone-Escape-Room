@@ -21,7 +21,9 @@ void APuzzleManager::BeginPlay()
 	//Deprecated
 	//allPuzzle1Actors.Init(nullptr, allActors.Num());
 	
-	isPuzzle1Solved = false;
+	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
+		isPuzzle1Check[i] = false;
+	}
 
 	#pragma region Debug
 	for(int32 i = 0; i < puzzle1Solution.Num(); i++){
@@ -36,7 +38,6 @@ void APuzzleManager::BeginPlay()
 
 	AddPuzzle();
 
-	CheckPuzzle1State();
 }
 
 // Called every frame
@@ -55,10 +56,12 @@ void APuzzleManager::Tick(float DeltaTime)
 
 #pragma endregion
 
-	if (curCount == solveCount) {
-		isPuzzle1Solved = true;
-		UE_LOG(LogTemp, Warning, TEXT("Solved!!!!!!!!!!!"));
-	}
+	if(isPuzzle1Solved){return;}
+
+	UpdatePuzzle1State();
+
+	CheckPuzzle1State();
+
 }
 
 void APuzzleManager::AddPuzzle()
@@ -66,10 +69,11 @@ void APuzzleManager::AddPuzzle()
 	for (TActorIterator<APuzzle1> it(GetWorld()); it; ++it) {
 		allPuzzle1Actors.Add(*it);
 	}
+
 	UE_LOG(LogTemp,Warning,TEXT("size : %d"),allPuzzle1Actors.Num());
 }
 
-void APuzzleManager::CheckPuzzle1State()
+void APuzzleManager::UpdatePuzzle1State()
 {
 	if(allPuzzle1Actors.Num() != puzzle1Solution.Num()){
 		UE_LOG(LogTemp, Warning, TEXT("Number of Puzzle Actors and Solutions do not match. Check the details window."));
@@ -77,10 +81,11 @@ void APuzzleManager::CheckPuzzle1State()
 	}
 
 	for(int32 i = 0; i < allPuzzle1Actors.Num(); i++){
-		if ((allPuzzle1Actors[i]->isPuzzleActorState == puzzle1Solution[i])) {
-			curCount++;
-			//UE_LOG(LogTemp, Warning, TEXT("count : %d"),curCount);
+
+		if(allPuzzle1Actors[i]->isPuzzleActorState == puzzle1Solution[i]){
+			isPuzzle1Check[i] = true;
 		}
+
 		#pragma region Debug
 		//if (allPuzzle1Actors[i]->GetName().Contains("BP_Puzzle")) {
 		//	if (allPuzzle1Actors[i]->isPuzzleActorState) {
@@ -89,10 +94,18 @@ void APuzzleManager::CheckPuzzle1State()
 		//}
 		#pragma endregion
 	}
-
 }
 
-	#pragma region Deprecated
+void APuzzleManager::CheckPuzzle1State()
+{
+	for (int32 i = 0; i < isPuzzle1Check.Num(); i++) {
+		if(isPuzzle1Check[i] == true){
+			isPuzzle1Solved = true;
+		}
+	}
+}
+
+#pragma region Deprecated
 	//if(allActors.Num() != allPuzzle1Actors.Num()){
 	//	UE_LOG(LogTemp, Warning, TEXT("Number of Puzzle Actors and Solutions do not match. Check the details window."));
 	//	return;
