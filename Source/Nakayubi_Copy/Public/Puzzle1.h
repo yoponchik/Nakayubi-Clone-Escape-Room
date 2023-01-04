@@ -6,11 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "Puzzle1.generated.h"
 
-UENUM(BlueprintType)
-enum class EPuzzle1State: uint8 {
-	Unchanged,
-	Changed
-};
+//UENUM(BlueprintType)
+//enum class EPuzzle1State: uint8 {
+//	Unchanged,
+//	Changed
+//};
 
 UCLASS()
 class NAKAYUBI_COPY_API APuzzle1 : public AActor
@@ -29,20 +29,26 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+#pragma region Puzzle Interaction
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSettings)
 	class UStaticMeshComponent* meshComp;
+
+	bool isClicked;
 
 	void ChangeMaterialColor();
 	void ChangeToOriginalColor();
 
-	EPuzzle1State puzzle1State;
-
-	bool isClicked;
+	//EPuzzle1State puzzle1State;
+#pragma endregion
+	UPROPERTY(EditAnywhere, Category = Puzzle)
+	bool isPuzzleActorState;
 
 private:
 
+#pragma region Puzzle Interaction
 	FLinearColor initColor;
 	UMaterialInstanceDynamic* dynamicMat;
+#pragma endregion
 
 };
 

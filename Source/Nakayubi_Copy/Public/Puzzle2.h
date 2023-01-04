@@ -6,11 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "Puzzle2.generated.h"
 
-UENUM(BlueprintType)
-enum class EPuzzle2State : uint8 {
-	Unchanged,
-	Changed
-};
+//UENUM(BlueprintType)
+//enum class EPuzzle2State : uint8 {
+//	Unchanged,
+//	Changed
+//};
 
 UCLASS()
 class NAKAYUBI_COPY_API APuzzle2 : public AActor
@@ -29,16 +29,20 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+#pragma region Puzzle Interaction
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSettings)
+	class UStaticMeshComponent* meshComp;
+
 	bool isClicked;
 
 	void MovePosition();
 	void MoveToOriginalPosition();
 
-	EPuzzle2State puzzle2State;
+	//EPuzzle2State puzzle2State;
 
 	FVector originalPosition;
 	FVector offsetPosition = FVector(0,0,50);
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSettings)
-	class UStaticMeshComponent* meshComp;
+#pragma  endregion
 };

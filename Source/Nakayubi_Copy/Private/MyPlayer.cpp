@@ -75,20 +75,24 @@ void AMyPlayer::CheckPuzzleType()
 {
 	if (clickedActor->IsA<APuzzle1>()) {									//if clickedActor is puzzle1
 	//if (Cast<APuzzle1>(clickedActor)) {									//Either works
+
 #pragma region Debug
 			//Extracted Actor is APuzzle1 class
 		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
 #pragma endregion
-
-		APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor); 									//Either works
-		//puzzle1->puzzle1State = EPuzzle1State::Changed;
+		APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor); 									
 		puzzle1->isClicked = !(puzzle1->isClicked);
+		//puzzle1->puzzle1State = EPuzzle1State::Changed;					//deprecated
 	}
 
 	if (clickedActor->IsA<APuzzle2>()) {									//if clickedActor is puzzle1
 
-		APuzzle2* puzzle2 = Cast<APuzzle2>(clickedActor); 									//Either works
-		//puzzle2->puzzle2State = EPuzzle2State::Changed;
+#pragma region Debug
+			//Extracted Actor is APuzzle1 class
+		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE2"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+		APuzzle2* puzzle2 = Cast<APuzzle2>(clickedActor); 									
 		puzzle2->isClicked = !(puzzle2->isClicked);
+		//puzzle2->puzzle2State = EPuzzle2State::Changed;					//deprecated
 	}
 }

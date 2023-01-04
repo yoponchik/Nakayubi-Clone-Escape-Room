@@ -32,11 +32,13 @@ public:
 	bool isPlayerClicked;	
 	
 private:
+	class AActor* clickedActor;
+
 	void Click();
 	void UnClick();
 
-	class AActor* clickedActor;
-
 	void CheckPuzzleType();
+
+
 
 };
