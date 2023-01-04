@@ -25,14 +25,24 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Puzzle)
 	TArray <bool> puzzle1Solution;
-
-	UPROPERTY(EditAnywhere, Category = Puzzle)
-	TArray <class AActor*> allActors;
 	
 	TArray <class APuzzle1*> allPuzzle1Actors;
 
-	UPROPERTY(EditAnywhere, Category = Puzzle)
-	bool isPuzzle1Solved = false;
+	void AddPuzzle();
 
 	void CheckPuzzle1State();
+
+	UPROPERTY(EditAnywhere, Category = Puzzle)
+	int32 solveCount = 4;
+
+	UPROPERTY(VisibleAnywhere, Category = Puzzle)
+	bool isPuzzle1Solved = false;
+
+	//Deprecated
+	//UPROPERTY(EditAnywhere, Category = Puzzle)
+	//TArray <class AActor*> allActors;
+private:
+
+	int32 curCount = 0;
+
 };

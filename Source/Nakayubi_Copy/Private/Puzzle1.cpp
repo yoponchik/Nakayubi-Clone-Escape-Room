@@ -31,19 +31,18 @@ void APuzzle1::BeginPlay(){
 	
 	//puzzle1State = EPuzzle1State::Unchanged;
 
-#pragma region Puzzle Interaction
-	isPuzzleActorState = false;
+	#pragma region Puzzle Interaction
 
-#pragma region Debug Switch
+	#pragma region Debug Switch
 	//if (puzzleState == EPuzzleState::Unchanged) {
 	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
 	//}
 	//else if (puzzleState == EPuzzleState::Changed) {
 	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
 	//}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Material Initialization
+	#pragma region Material Initialization
 	//save current material color vector
 	UMaterialInterface* iMat = meshComp->GetMaterial(0);
 	FHashedMaterialParameterInfo param = FHashedMaterialParameterInfo(TEXT("myColor"));
@@ -58,48 +57,29 @@ void APuzzle1::BeginPlay(){
 	if (dynamicMat != nullptr) {
 		meshComp->SetMaterial(0, dynamicMat);
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma endregion
-}
-
-#pragma region Puzzle Interaction
-void APuzzle1::ChangeToOriginalColor() {
-	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)initColor);
-	#pragma region Debug 
-	//UE_LOG(LogTemp, Warning, TEXT("ChangeToOriginalColor Called (APuzzle1::ChangeToOriginalColor)"));						//Need asterisk because need pointer to print out character
 	#pragma endregion
 }
-
-void APuzzle1::ChangeMaterialColor() {
-	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)FLinearColor::Red);
-#pragma region Debug 
-	//UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Called (APuzzle1::ChangeMaterialColor)"));						//Need asterisk because need pointer to print out character
-#pragma endregion
-}
-
-#pragma endregion
-
 
 // Called every frame
 void APuzzle1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-#pragma region Puzzle Interaction
-
+	#pragma region Puzzle Interaction
 
 	if (isClicked) {
 		ChangeMaterialColor();
-#pragma region Debug 
+	#pragma region Debug 
 		//UE_LOG(LogTemp, Warning, TEXT("isClicked"));						//Need asterisk because need pointer to print out character
-#pragma endregion 
+	#pragma endregion 
 	}
 	else {
 		ChangeToOriginalColor();
-#pragma region Debug 
+	#pragma region Debug 
 		//UE_LOG(LogTemp, Warning, TEXT("isUnClicked"));						//Need asterisk because need pointer to print out character
-#pragma endregion 
+	#pragma endregion 
 	}
 
 	//switch (puzzle1State) {
@@ -125,4 +105,29 @@ void APuzzle1::Tick(float DeltaTime)
 #pragma endregion
 
 }
+
+#pragma region Puzzle Interaction
+void APuzzle1::ChangeToOriginalColor() {
+	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)initColor);
+
+	isPuzzleActorState = false;
+
+	#pragma region Debug 
+	//UE_LOG(LogTemp, Warning, TEXT("ChangeToOriginalColor Called (APuzzle1::ChangeToOriginalColor)"));						//Need asterisk because need pointer to print out character
+	#pragma endregion
+}
+
+void APuzzle1::ChangeMaterialColor() {
+	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)FLinearColor::Red);
+
+	isPuzzleActorState = true;
+
+#pragma region Debug 
+	//UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Called (APuzzle1::ChangeMaterialColor)"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+}
+#pragma endregion
+
+
+
 
