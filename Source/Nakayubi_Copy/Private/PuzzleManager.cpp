@@ -20,6 +20,8 @@ void APuzzleManager::BeginPlay()
 
 	//Deprecated
 	//allPuzzle1Actors.Init(nullptr, allActors.Num());
+
+	isPuzzle1Check.Init(false, puzzle1Solution.Num());
 	
 	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
 		isPuzzle1Check[i] = false;
@@ -56,11 +58,12 @@ void APuzzleManager::Tick(float DeltaTime)
 
 #pragma endregion
 
-	if(isPuzzle1Solved){return;}
+	if(!isPuzzle1Solved){
+		UpdatePuzzle1State();
+		CheckPuzzle1State();
+	}
+	else{return;}
 
-	UpdatePuzzle1State();
-
-	CheckPuzzle1State();
 
 }
 
@@ -139,4 +142,4 @@ void APuzzleManager::CheckPuzzle1State()
 		//	}
 		//}
 	#pragma endregion
-	#pragma endregion
+#pragma endregion
