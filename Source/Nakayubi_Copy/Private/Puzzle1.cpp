@@ -60,6 +60,8 @@ void APuzzle1::BeginPlay(){
 	#pragma endregion
 
 	#pragma endregion
+
+	isPuzzleActorState = false;
 }
 
 // Called every frame
