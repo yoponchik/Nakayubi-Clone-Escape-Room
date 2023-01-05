@@ -21,25 +21,23 @@ void APuzzleManager::BeginPlay()
 	//Deprecated
 	//allPuzzle1Actors.Init(nullptr, allActors.Num());
 
-	isPuzzle1Check.Init(false, puzzle1Solution.Num());
-	
-	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
-		isPuzzle1Check[i] = false;
-	}
+	isPuzzle1Check.Init(false, puzzle1Solution.Num());						//Initialize Check array
+
 
 	#pragma region Debug
-	for(int32 i = 0; i < puzzle1Solution.Num(); i++){
-		if(puzzle1Solution[i]){
-			UE_LOG(LogTemp, Warning, TEXT("Puzzle1Solution:Index %d = true"), i);
-		}
-		else{
-			UE_LOG(LogTemp, Warning, TEXT("Puzzle1Solution:Index %d = false"), i);
-		}
-	}
+	//for(int32 i = 0; i < puzzle1Solution.Num(); i++){
+	//	if(puzzle1Solution[i]){
+	//		UE_LOG(LogTemp, Warning, TEXT("Puzzle1Solution:Index %d = true"), i);
+	//	}
+	//	else{
+	//		UE_LOG(LogTemp, Warning, TEXT("Puzzle1Solution:Index %d = false"), i);
+	//	}
+	//}
 	#pragma endregion
 
 	AddPuzzle();
 
+	isPuzzle1Solved = false;
 }
 
 // Called every frame
@@ -47,34 +45,18 @@ void APuzzleManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-#pragma region Deprecated
-
-	//if(!isPuzzle1Solved){
-	//	CheckPuzzle1State();
-	//}
-	//else{
-	//	return;
-	//}
-
-#pragma endregion
-
-	if(!isPuzzle1Solved){
-		UpdatePuzzle1State();
-		CheckPuzzle1State();
-	}
-	else{return;}
-
-
+	UpdatePuzzle1State();
 }
 
+#pragma region AddPuzzle1Actor
 void APuzzleManager::AddPuzzle()
 {	
+	//Add all Puzzle1 in allPuzzle1Actor array
 	for (TActorIterator<APuzzle1> it(GetWorld()); it; ++it) {
 		allPuzzle1Actors.Add(*it);
 	}
-
-	UE_LOG(LogTemp,Warning,TEXT("size : %d"),allPuzzle1Actors.Num());
 }
+#pragma endregion
 
 void APuzzleManager::UpdatePuzzle1State()
 {
@@ -87,24 +69,26 @@ void APuzzleManager::UpdatePuzzle1State()
 
 		if(allPuzzle1Actors[i]->isPuzzleActorState == puzzle1Solution[i]){
 			isPuzzle1Check[i] = true;
+			//UE_LOG(LogTemp, Warning, TEXT("%d: True"), i);
+		}
+		else{
+			isPuzzle1Check[i] = false;
+			//UE_LOG(LogTemp, Warning, TEXT("%d: False"), i);
 		}
 
-		#pragma region Debug
-		//if (allPuzzle1Actors[i]->GetName().Contains("BP_Puzzle")) {
-		//	if (allPuzzle1Actors[i]->isPuzzleActorState) {
-		//		UE_LOG(LogTemp, Warning, TEXT("%s"), *allPuzzle1Actors[i]->GetName());
-		//	}
-		//}
-		#pragma endregion
 	}
 }
+
+
 
 void APuzzleManager::CheckPuzzle1State()
 {
 	for (int32 i = 0; i < isPuzzle1Check.Num(); i++) {
-		if(isPuzzle1Check[i] == true){
-			isPuzzle1Solved = true;
+		if (!isPuzzle1Check[i]) {
+			isPuzzle1Solved = false;
+			break;
 		}
+		isPuzzle1Solved = true;
 	}
 }
 
