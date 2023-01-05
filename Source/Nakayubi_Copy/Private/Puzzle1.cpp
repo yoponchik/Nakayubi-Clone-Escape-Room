@@ -111,7 +111,6 @@ void APuzzle1::ChangeToOriginalColor() {
 	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)initColor);
 
 	isPuzzleActorState = false;
-	UE_LOG(LogTemp, Warning, TEXT("ChangeToOriginalColor: isPuzzleActorState = false"));
 
 	#pragma region Debug 
 	//UE_LOG(LogTemp, Warning, TEXT("ChangeToOriginalColor Called (APuzzle1::ChangeToOriginalColor)"));						//Need asterisk because need pointer to print out character
@@ -122,7 +121,6 @@ void APuzzle1::ChangeMaterialColor() {
 	dynamicMat->SetVectorParameterValue(TEXT("myColor"), (FVector4)FLinearColor::Red);
 
 	isPuzzleActorState = true;
-	UE_LOG(LogTemp, Warning, TEXT("ChangeToOriginalColor: isPuzzleActorState = true"));
 
 #pragma region Debug 
 	//UE_LOG(LogTemp, Warning, TEXT("ChangeMaterialColor Called (APuzzle1::ChangeMaterialColor)"));						//Need asterisk because need pointer to print out character
