@@ -5,6 +5,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "MyPlayer.h"
+#include "MyGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ANumberPuzzle::ANumberPuzzle()
@@ -29,6 +31,10 @@ void ANumberPuzzle::BeginPlay()
 {
 	Super::BeginPlay();
 
+	gm = Cast<AMyGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (gm == nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("ANumberPuzzle:Gm 404"));
+	}
 }
 
 // Called every frame
@@ -42,7 +48,16 @@ void ANumberPuzzle::Tick(float DeltaTime)
 
 	tempCount %= 9;
 
-	UE_LOG(LogTemp, Warning, TEXT("Count: %d"), tempCount);
+	//if (gm != nullptr) {
+	//	//insert tempcount inn gm->printnumcount
+
+	//	gm->currentNumCount = tempCount;
+
+	//	gm->AddNumCount(gm->currentNumCount);
+	//	UE_LOG(LogTemp, Warning, TEXT("Count: %d"), tempCount);
+	//	
+	//}
+
 
 }
 

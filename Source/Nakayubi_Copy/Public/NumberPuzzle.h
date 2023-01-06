@@ -33,4 +33,6 @@ public:
 
 	float roundCount;
 
+
+	class AMyGameModeBase* gm;
 };
