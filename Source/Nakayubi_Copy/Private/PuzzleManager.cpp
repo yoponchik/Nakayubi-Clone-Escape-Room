@@ -23,9 +23,9 @@ void APuzzleManager::BeginPlay()
 
 	isPuzzle1Check.Init(false, puzzle1Solution.Num());
 	
-	//for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
-	//	isPuzzle1Check[i] = false;
-	//}
+	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
+		isPuzzle1Check[i] = false;
+	}
 
 	#pragma region Debug
 	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
@@ -61,7 +61,6 @@ void APuzzleManager::Tick(float DeltaTime)
 	CheckPuzzle1State();
 	UpdatePuzzle1State();
 
-
 }
 
 void APuzzleManager::AddPuzzle()
@@ -81,13 +80,13 @@ void APuzzleManager::UpdatePuzzle1State()
 
 	for (int32 i = 0; i < allPuzzle1Actors.Num(); i++) {
 		if ((allPuzzle1Actors[i]->isPuzzleActorState) == puzzle1Solution[i]) {
-			isPuzzle1Check[i] = false;
-		}
-		else {
 			isPuzzle1Check[i] = true;
 		}
+		else {
+			isPuzzle1Check[i] = false;
+		}
 	}
-
+	
 
 	//for (int32 i = 0; i < isPuzzle1Check.Num(); i++) {
 	//	if (isPuzzle1Check[i]) {
@@ -146,3 +145,4 @@ void APuzzleManager::CheckPuzzle1State()
 		//}
 	#pragma endregion
 #pragma endregion
+
