@@ -30,6 +30,8 @@ public:
 	APlayerController* playerController;
 
 	bool isPlayerClicked;	
+
+	class AMyGameModeBase* gm;
 	
 private:
 	class AActor* clickedActor;

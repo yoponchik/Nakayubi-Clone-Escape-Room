@@ -6,23 +6,23 @@
 
 void AMyGameModeBase::BeginPlay()
 {
-	//uINumCount = CreateWidget<UNumberCountWidget>(GetWorld(), numCountWidget);
-	//
-	//if (uINumCount != nullptr) {  
-	//	uINumCount->AddToViewport();											//draw score ui in viewport
+	//if (uINumCount != nullptr)
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("AMyGameModeBase:uINumCount found"));
+	//	uINumCount = CreateWidget<UNumberCountWidget>(GetWorld(), numCountWidget);
+		//
+	//	if (uINumCount != nullptr) {  
+	//		uINumCount->AddToViewport();											//draw score ui in viewport
 
-	//	uINumCount->PrintNumberCount();											//draw score ui in viewport
-	//}									//nullptr checker for main UI
-
-
+	//		uINumCount->PrintNumberCount();											//draw score ui in viewport
+	//	}									//nullptr checker for main UI
+	//}
 }
 
 void AMyGameModeBase::AddNumCount(int32 count)
 {
-	//if (uINumCount != nullptr) {
-	//	
-	//	count = currentNumCount;
+	count = currentNumCount;
 
-	//	uINumCount->PrintNumberCount();
-	//}
+	uINumCount->PrintNumberCount();
+
 }

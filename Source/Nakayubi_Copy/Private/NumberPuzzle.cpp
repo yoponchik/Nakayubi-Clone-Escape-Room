@@ -31,9 +31,11 @@ void ANumberPuzzle::BeginPlay()
 {
 	Super::BeginPlay();
 
-	gm = Cast<AMyGameModeBase>(GetWorld()->GetAuthGameMode());
-	if (gm == nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("ANumberPuzzle:Gm 404"));
+	gm = Cast<AMyGameModeBase>(UGameplayStatics::GetGameMode(this));
+
+	//gm = Cast<AMyGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (gm != nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("ANumberPuzzle:Gm not 404"));
 	}
 }
 
@@ -48,15 +50,16 @@ void ANumberPuzzle::Tick(float DeltaTime)
 
 	tempCount %= 9;
 
-	//if (gm != nullptr) {
+	if (gm != nullptr) {
 	//	//insert tempcount inn gm->printnumcount
 
-	//	gm->currentNumCount = tempCount;
+		gm->currentNumCount = tempCount;
 
-	//	gm->AddNumCount(gm->currentNumCount);
-	//	UE_LOG(LogTemp, Warning, TEXT("Count: %d"), tempCount);
+		//error
+		gm->AddNumCount(gm->currentNumCount);
+		//UE_LOG(LogTemp, Warning, TEXT("Count: %d"), tempCount);
 	//	
-	//}
+	}
 
 
 }

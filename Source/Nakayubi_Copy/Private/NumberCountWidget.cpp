@@ -10,25 +10,32 @@
 
 void UNumberCountWidget::PrintNumberCount()
 {
-	//AMyGameModeBase* gm = Cast<AMyGameModeBase>(UGameplayStatics::GetGameMode(this));
+	AMyGameModeBase* gm = Cast<AMyGameModeBase>(UGameplayStatics::GetGameMode(this));
 
-	//if (gm == nullptr) {
-	//	UE_LOG(LogTemp, Warning, TEXT("UNumberCountWidget:Gm 404"));
-	//}
+	//this doesn't work for some reason??
+	//cause of crash
+	//AMyGameModeBase* gm = Cast<AMyGameModeBase>(GetWorld()->GetAuthGameMode());
 
-	//if (gm != nullptr) {
-	//	FText textNumberCount = FText::AsNumber(gm->GetCurrentNumCount());
+	if (gm == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UNumberCountWidget:gm not found"));
+	}
+	if (gm != nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("gm found"));
+		
+		FText textCount = FText::AsNumber(gm->GetCurrentNumCount());
 
-	//	//change uIcurrrentScore's text
-	//	UINumberCount->SetText(textNumberCount);
+		//change uIcurrrentScore's text
+		
+		textNumberCount->SetText(textCount);
 
-	//	UE_LOG(LogTemp, Warning, TEXT("PrintNumberCount"));
-	//}
+		UE_LOG(LogTemp, Warning, TEXT("textCount"));
+	}
 }
 
-void UNumberCountWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
-{
-	Super::NativeTick(MyGeometry, InDeltaTime);
+//void UNumberCountWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+//{
+	//Super::NativeTick(MyGeometry, InDeltaTime);
 
 	//AMyGameModeBase* myGM = Cast<AMyGameModeBase>(UGameplayStatics::GetGameMode(this));
 
@@ -39,6 +46,6 @@ void UNumberCountWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTi
 	//	UINumberCount->SetText(textNumberCount);
 	//}
 
-}
+//}
 
 

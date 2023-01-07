@@ -6,6 +6,8 @@
 #include "Puzzle1.h"
 #include "Puzzle2.h"
 #include "NumberPuzzle.h"
+#include "MyGameModeBase.h"
+
 
 
 // Sets default values
@@ -25,6 +27,7 @@ void AMyPlayer::BeginPlay()
 	playerController->bShowMouseCursor = true;
 
 	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+
 }
 
 // Called every frame
@@ -118,10 +121,8 @@ void AMyPlayer::CheckPuzzleType()
 			(numpuzzle->roundCount) = 0;
 		}
 
-
-
 		//UE_LOG(LogTemp, Warning, TEXT("Count: %f"), numpuzzle->roundCount);						
-		//UE_LOG(LogTemp, Warning, TEXT("Count: %d"), numpuzzle->count);						
+		UE_LOG(LogTemp, Warning, TEXT("Count: %d"), numpuzzle->count);						
 
 	}
 }

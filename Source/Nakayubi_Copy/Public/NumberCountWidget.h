@@ -16,12 +16,10 @@ class NAKAYUBI_COPY_API UNumberCountWidget : public UUserWidget
 	
 public:
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Settings", meta = (BindWidget));
-	class UTextBlock* UINumberCount;
+	class UTextBlock* textNumberCount;
 
 	void PrintNumberCount();
 
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
+	
 };

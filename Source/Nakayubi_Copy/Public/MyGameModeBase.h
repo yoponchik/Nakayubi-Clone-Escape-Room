@@ -15,20 +15,23 @@ class NAKAYUBI_COPY_API AMyGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 
 public:
-
-	UPROPERTY(EditAnywhere, Category = DefaultSettings)
-	TSubclassOf<class UNumberCountWidget> numCountWidget;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=NumData)
+	int32 currentNumCount = 0;
 
 	UFUNCTION(BlueprintPure)
 	FORCEINLINE int32 GetCurrentNumCount() { return currentNumCount; }
 
-	int32 currentNumCount = 0;
-
 	class UNumberCountWidget* uINumCount;
+	
+	UPROPERTY(EditAnywhere, Category = DefaultSettings)
+	TSubclassOf<class UNumberCountWidget> numCountWidget;
+
+	void AddNumCount(int32 count);
+
+
 
 	virtual void BeginPlay() override;
 
-	void AddNumCount(int32 count);
 
 	
 
