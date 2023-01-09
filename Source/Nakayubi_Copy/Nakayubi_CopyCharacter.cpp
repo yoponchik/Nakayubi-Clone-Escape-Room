@@ -8,6 +8,12 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "Puzzle1.h"
+#include "Puzzle2.h"
+#include "NumberPuzzle.h"
+#include "MyGameModeBase.h"
+
 
 //////////////////////////////////////////////////////////////////////////
 // ANakayubi_CopyCharacter
@@ -51,6 +57,34 @@ void ANakayubi_CopyCharacter::BeginPlay()
 		}
 	}
 
+
+	playerController = UGameplayStatics::GetPlayerController(this, 0);
+	playerController->bShowMouseCursor = true;
+
+	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+
+
+}
+
+void ANakayubi_CopyCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	FHitResult hitResult;
+	const ETraceTypeQuery TraceChannel = UEngineTypes::ConvertToTraceType((ECC_Visibility));
+
+	//If Hit result has the channel trace channel, if it is hit result...
+	if (playerController->GetHitResultUnderCursorByChannel(TraceChannel, true, hitResult)) {
+
+		if (!isPlayerClicked) { return; }
+		clickedActor = hitResult.GetActor();									//if Clicked, get the actor
+#pragma region Debug
+		//Get Actor Name
+		//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
+#pragma endregion
+
+		CheckPuzzleType();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -70,8 +104,76 @@ void ANakayubi_CopyCharacter::SetupPlayerInputComponent(class UInputComponent* P
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ANakayubi_CopyCharacter::Look);
 	}
+
+	PlayerInputComponent->BindAction("Click", IE_Pressed, this, &ANakayubi_CopyCharacter::Click);
+	PlayerInputComponent->BindAction("Click", IE_Released, this, &ANakayubi_CopyCharacter::UnClick);
 }
 
+void ANakayubi_CopyCharacter::Click() {
+	isPlayerClicked = true;
+#pragma region Debug
+	//UE_LOG(LogTemp, Warning, TEXT("Click"));
+#pragma endregion
+}
+
+void ANakayubi_CopyCharacter::UnClick() {
+	isPlayerClicked = false;
+#pragma region Debug
+	//UE_LOG(LogTemp, Warning, TEXT("Click End"));
+#pragma endregion
+}
+
+void ANakayubi_CopyCharacter::CheckPuzzleType()
+{
+	if (clickedActor->IsA<APuzzle1>()) {									//if clickedActor is puzzle1
+	//if (Cast<APuzzle1>(clickedActor)) {									//Either works
+
+#pragma region Debug
+			//Extracted Actor is APuzzle1 class
+		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+		APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor);
+		puzzle1->isClicked = !(puzzle1->isClicked);
+		//puzzle1->puzzle1State = EPuzzle1State::Changed;					//deprecated
+	}
+
+	if (clickedActor->IsA<APuzzle2>()) {									//if clickedActor is puzzle1
+
+#pragma region Debug
+			//Extracted Actor is APuzzle1 class
+		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE2"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+		APuzzle2* puzzle2 = Cast<APuzzle2>(clickedActor);
+		puzzle2->isClicked = !(puzzle2->isClicked);
+		//puzzle2->puzzle2State = EPuzzle2State::Changed;					//deprecated
+	}
+
+	if (clickedActor->IsA<ANumberPuzzle>()) {									//if clickedActor is puzzle1
+#pragma region Debug
+		//UE_LOG(LogTemp, Warning, TEXT("iS A NumberPuzzle"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+
+		ANumberPuzzle* numpuzzle = Cast<ANumberPuzzle>(clickedActor);
+
+
+		//to tell the numpuzzle that it is clicked
+		numpuzzle->isClicked = !(numpuzzle->isClicked);
+
+		//temporary
+		//Count up every click
+		(numpuzzle->roundCount++);
+		(numpuzzle->roundCount) /= (11.0f);
+
+		if ((numpuzzle->roundCount) >= 0.1f) {
+			numpuzzle->count++;
+			(numpuzzle->roundCount) = 0;
+		}
+
+		//UE_LOG(LogTemp, Warning, TEXT("Count: %f"), numpuzzle->roundCount);						
+		UE_LOG(LogTemp, Warning, TEXT("Count: %d"), numpuzzle->count);
+
+	}
+}
 
 void ANakayubi_CopyCharacter::Move(const FInputActionValue& Value)
 {

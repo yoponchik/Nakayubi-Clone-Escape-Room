@@ -20,7 +20,7 @@ void UNumberCountWidget::PrintNumberCount()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("UNumberCountWidget:gm not found"));
 	}
-	if (gm != nullptr) {
+	else {
 		UE_LOG(LogTemp, Warning, TEXT("gm found"));
 		
 		FText textCount = FText::AsNumber(gm->GetCurrentNumCount());

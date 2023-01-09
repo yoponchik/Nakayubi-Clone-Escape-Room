@@ -43,6 +43,22 @@ class ANakayubi_CopyCharacter : public ACharacter
 public:
 	ANakayubi_CopyCharacter();
 
+	virtual void Tick(float DeltaTime) override;
+
+
+	APlayerController* playerController;
+
+	bool isPlayerClicked;
+
+	class AMyGameModeBase* gm;
+
+	class AActor* clickedActor;
+
+	void Click();
+	void UnClick();
+
+	void CheckPuzzleType();
+
 protected:
 	virtual void BeginPlay();
 
