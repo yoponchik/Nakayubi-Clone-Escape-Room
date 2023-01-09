@@ -31,6 +31,9 @@ public:
 	TArray <bool> puzzle2Solution;
 	TArray <class APuzzle2*> allPuzzle2Actors;
 
+	UPROPERTY(EditAnywhere, Category = Puzzle)
+	TArray <class ADoor*> allDoorActors;
+
 	void AddPuzzle1();
 	void UpdatePuzzle1State();
 	void CheckPuzzle1State();
@@ -38,6 +41,9 @@ public:
 	void AddPuzzle2();
 	void UpdatePuzzle2State();
 	void CheckPuzzle2State();
+
+	void AddDoor();
+	void ConfirmPuzzle();
 
 	UPROPERTY(VisibleAnywhere, Category = Puzzle)
 	TArray <bool> isPuzzle1Check;

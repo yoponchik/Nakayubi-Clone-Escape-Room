@@ -4,6 +4,8 @@
 #include "PuzzleManager.h"
 #include "Puzzle1.h"
 #include "Puzzle2.h"
+#include "Door.h"
+
 
 #include "EngineUtils.h"
 
@@ -46,6 +48,7 @@ void APuzzleManager::BeginPlay()
 
 	AddPuzzle1();
 	AddPuzzle2();
+	AddDoor();
 }
 
 // Called every frame
@@ -69,6 +72,8 @@ void APuzzleManager::Tick(float DeltaTime)
 
 	CheckPuzzle2State();
 	UpdatePuzzle2State();
+
+	ConfirmPuzzle();
 }
 
 void APuzzleManager::AddPuzzle1()
@@ -151,6 +156,33 @@ void APuzzleManager::CheckPuzzle2State()
 		}
 
 		isPuzzle2Solved = true;
+	}
+}
+
+void APuzzleManager::AddDoor()
+{
+	for (TActorIterator<ADoor> it(GetWorld()); it; ++it) {
+		allDoorActors.Add(*it);
+	}
+}
+
+void APuzzleManager::ConfirmPuzzle()
+{
+	if (allDoorActors.Num() != 2) {
+		UE_LOG(LogTemp, Warning, TEXT("Number of Door Actors and Solutions do not match. Check the details window."));
+		return;
+	}
+	if(isPuzzle1Solved){
+		allDoorActors[0]->OpenDoor();
+	}
+	else{
+		allDoorActors[0]->CloseDoor();
+	}	
+	if(isPuzzle2Solved){
+		allDoorActors[1]->OpenDoor();
+	}
+	else{
+		allDoorActors[1]->CloseDoor();
 	}
 }
 
