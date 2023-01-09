@@ -6,7 +6,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/TextBlock.h"
 
-
+//This script has a lot of errors
+//=======================================================
+//=======================================================
+//=======================================================
 
 void UNumberCountWidget::PrintNumberCount()
 {
@@ -24,9 +27,8 @@ void UNumberCountWidget::PrintNumberCount()
 		UE_LOG(LogTemp, Warning, TEXT("gm found"));
 		
 		FText textCount = FText::AsNumber(gm->GetCurrentNumCount());
-
-		//change uIcurrrentScore's text
 		
+		//change uIcurrrentScore's text
 		textNumberCount->SetText(textCount);
 
 		UE_LOG(LogTemp, Warning, TEXT("textCount"));

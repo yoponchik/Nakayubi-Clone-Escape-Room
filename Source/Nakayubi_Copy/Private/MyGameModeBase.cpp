@@ -4,6 +4,11 @@
 #include "MyGameModeBase.h"
 #include "NumberCountWidget.h"
 
+//This script has a lot of errors
+//=======================================================
+//=======================================================
+//=======================================================
+
 void AMyGameModeBase::BeginPlay()
 {
 	//if (uINumCount != nullptr)

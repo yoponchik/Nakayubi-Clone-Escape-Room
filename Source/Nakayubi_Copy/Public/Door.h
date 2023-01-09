@@ -20,21 +20,21 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSettings)
-		class UStaticMeshComponent* meshComp;
-
-	bool isClicked;
+	class UStaticMeshComponent* meshComp;
 
 	void OpenDoor();
 	void CloseDoor();
 
-	//EPuzzle2State puzzle2State;
-
-	FVector originalPosition;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DoorSettings)
-	FVector offsetPosition = FVector(0, 0, 50);
+	FVector offsetPosition = FVector(0, 0, 50);										//How much the door will open
+
+	bool isClicked;																	//To check if the cursor has clicked the actor
+
+	//Deprecated
+	//EPuzzle2State puzzle2State;
+private:
+	FVector originalPosition;
+
 };

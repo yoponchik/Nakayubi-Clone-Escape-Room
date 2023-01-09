@@ -27,59 +27,39 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+#pragma region Enhanced Input
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
-		class UInputAction* iAHorizontal;
-
-	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
-		class UInputAction* iAVertical;
-
-	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
-		class UInputAction* iAMovement;
-
+	class UInputAction* iAMovement;
 
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
-		class UInputAction* iAClick;
-
+	class UInputAction* iAClick;
 
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
-		class UInputMappingContext* iMCMyMapping;
-
-
-
-	float hori;
-
-	float verti;
+	class UInputMappingContext* iMCMyMapping;
 
 	UFUNCTION(BlueprintCallable)
-		void Move(const FInputActionValue& value);
-
-	UFUNCTION(BlueprintCallable)
-		void Horizontal(const FInputActionValue& value);
-	UFUNCTION(BlueprintCallable)
-		void Vertical(const FInputActionValue& value);
-
-	float moveSpeed = 800;
-	FVector direction;
+	void Move(const FInputActionValue& value);
 
 	void Turn(float value);
 	void LookUp(float value);
 
+	UFUNCTION(BlueprintCallable)
+	void Click();
+#pragma endregion
+
+	void CheckPuzzleType();								//Checks which class the puzzle is when clicked
+
 	UPROPERTY()
-	AMyCharacter* me;
+	AMyCharacter* me;									//For turning the camera
 
-	bool isPlayerClicked;
-
-	class AMyGameModeBase* gm;
-
+	APlayerController* playerCon;						//For mapping the enhanced input
 
 	class AActor* clickedActor;
 
-	UFUNCTION(BlueprintCallable)
-	void Click();
-	void UnClick();
+	FVector direction;
 
-	void CheckPuzzleType();
+	float moveSpeed = 800;
 
-	APlayerController* playerCon;
-
+	bool isPlayerClicked;
 };

@@ -9,12 +9,20 @@
 /**
  * 
  */
+
+ //This script has a lot of errors
+//=======================================================
+//=======================================================
+//=======================================================
+
 UCLASS()
 class NAKAYUBI_COPY_API AMyGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
 public:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=NumData)
 	int32 currentNumCount = 0;
 
@@ -28,11 +36,5 @@ public:
 
 	void AddNumCount(int32 count);
 
-
-
-	virtual void BeginPlay() override;
-
-
-	
 
 };

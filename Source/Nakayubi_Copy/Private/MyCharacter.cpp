@@ -5,7 +5,6 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
-#include "MyPlayer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Puzzle1.h"
 #include "Puzzle2.h"
@@ -17,7 +16,6 @@ AMyCharacter::AMyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -25,29 +23,34 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+#pragma region Map Enhanced Input
 	playerCon = Cast<APlayerController>(GetController());
 	if (playerCon != nullptr) {
-		UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerCon->GetLocalPlayer());
 
+		UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerCon->GetLocalPlayer());
 
 		if (subsystem != nullptr) {
 			subsystem->AddMappingContext(iMCMyMapping, 0);
 		}
 	}
+#pragma endregion
 
-	playerCon->bShowMouseCursor = true;
+	playerCon->bShowMouseCursor = true;						
 }
 
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	#pragma region Move Player
 	direction.Normalize();
 	FVector dir = GetActorLocation() + direction * moveSpeed * DeltaTime;
 	SetActorLocation(dir, true);
-
+	#pragma endregion
 }
 
+#pragma region Enhanced Input
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -62,8 +65,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	enhancedInputComponent->BindAction(iAClick, ETriggerEvent::Triggered, this, &AMyCharacter::Click);
 }
+#pragma endregion
 
-
+#pragma region Player Movement
 void AMyCharacter::Move(const FInputActionValue& value)
 {
 	const FVector2D movementVector = value.Get<FVector2D>();
@@ -76,23 +80,7 @@ void AMyCharacter::Move(const FInputActionValue& value)
 	const FVector rightDirection = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::Y);
 	AddMovementInput(rightDirection, movementVector.X);
 
-	UE_LOG(LogTemp, Warning, TEXT("Move"));
-
-}
-
-void AMyCharacter::Horizontal(const FInputActionValue& value)
-{
-	hori = value.Get<float>();
-	UE_LOG(LogTemp, Warning, TEXT("h: %.4f"), hori);
-
-	direction.Y = hori;
-}
-
-void AMyCharacter::Vertical(const FInputActionValue& value)
-{
-	verti = value.Get<float>();
-	UE_LOG(LogTemp, Warning, TEXT("h: %.4f"), verti);
-	direction.X = verti;
+	//UE_LOG(LogTemp, Warning, TEXT("Move"));					//Debug
 }
 
 void AMyCharacter::Turn(float value) {
@@ -102,12 +90,14 @@ void AMyCharacter::Turn(float value) {
 void AMyCharacter::LookUp(float value) {
 	me->AddControllerPitchInput(value);
 }
+#pragma endregion
 
+#pragma region Click
 void AMyCharacter::Click() {
 	isPlayerClicked = true;
-#pragma region Debug
-	UE_LOG(LogTemp, Warning, TEXT("Click"));
-#pragma endregion
+	#pragma region Debug
+	//UE_LOG(LogTemp, Warning, TEXT("Click"));
+	#pragma endregion
 
 	FHitResult hitResult;
 	const ETraceTypeQuery TraceChannel = UEngineTypes::ConvertToTraceType((ECC_Visibility));
@@ -117,22 +107,17 @@ void AMyCharacter::Click() {
 
 		if (!isPlayerClicked) { return; }
 		clickedActor = hitResult.GetActor();									//if Clicked, get the actor
-#pragma region Debug
+	#pragma region Debug
 		//Get Actor Name
 		//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
-#pragma endregion
+	#pragma endregion
 
 		CheckPuzzleType();
 	}
 }
-
-void AMyCharacter::UnClick() {
-	isPlayerClicked = false;
-#pragma region Debug
-	//UE_LOG(LogTemp, Warning, TEXT("Click End"));
 #pragma endregion
-}
 
+#pragma region Check Puzzle Type
 void AMyCharacter::CheckPuzzleType()
 {
 	if (clickedActor->IsA<APuzzle1>()) {									//if clickedActor is puzzle1
@@ -140,7 +125,7 @@ void AMyCharacter::CheckPuzzleType()
 
 #pragma region Debug
 			//Extracted Actor is APuzzle1 class
-		UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
+		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
 #pragma endregion
 		APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor);
 		puzzle1->isClicked = !(puzzle1->isClicked);
@@ -151,7 +136,7 @@ void AMyCharacter::CheckPuzzleType()
 
 #pragma region Debug
 		//Extracted Actor is APuzzle1 class
-		UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE2"));						//Need asterisk because need pointer to print out character
+		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE2"));						//Need asterisk because need pointer to print out character
 #pragma endregion
 		APuzzle2* puzzle2 = Cast<APuzzle2>(clickedActor);
 		puzzle2->isClicked = !(puzzle2->isClicked);
@@ -159,7 +144,7 @@ void AMyCharacter::CheckPuzzleType()
 
 	if (clickedActor->IsA<ANumberPuzzle>()) {									//if clickedActor is puzzle1
 #pragma region Debug
-		UE_LOG(LogTemp, Warning, TEXT("iS A NumberPuzzle"));						//Need asterisk because need pointer to print out character
+		//UE_LOG(LogTemp, Warning, TEXT("iS A NumberPuzzle"));						//Need asterisk because need pointer to print out character
 #pragma endregion
 
 		ANumberPuzzle* numpuzzle = Cast<ANumberPuzzle>(clickedActor);
@@ -183,3 +168,4 @@ void AMyCharacter::CheckPuzzleType()
 
 	}
 }
+#pragma endregion

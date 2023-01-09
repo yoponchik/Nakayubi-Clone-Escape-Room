@@ -4,7 +4,6 @@
 #include "Puzzle1.h"
 #include "Components/StaticMeshComponent.h"
 #include "UObject/ConstructorHelpers.h"
-#include "MyPlayer.h"
 
 
 // Sets default values
@@ -13,7 +12,7 @@ APuzzle1::APuzzle1()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-#pragma region Mesh Component
+	#pragma region Mesh Component
 	meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
 	SetRootComponent(meshComp);
 	ConstructorHelpers::FObjectFinder<UStaticMesh> cubeMesh(TEXT(" /Script/Engine.StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'"));
@@ -22,25 +21,12 @@ APuzzle1::APuzzle1()
 	if (cubeMesh.Succeeded()) {
 		meshComp->SetStaticMesh(cubeMesh.Object);
 	}
-#pragma endregion 
+	#pragma endregion 
 }
 
 // Called when the game starts or when spawned
 void APuzzle1::BeginPlay(){
 	Super::BeginPlay();
-	
-	//puzzle1State = EPuzzle1State::Unchanged;
-
-	#pragma region Puzzle Interaction
-
-	#pragma region Deprecated: Debug Switch
-	//if (puzzleState == EPuzzleState::Unchanged) {
-	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
-	//}
-	//else if (puzzleState == EPuzzleState::Changed) {
-	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
-	//}
-	#pragma endregion
 
 	#pragma region Material Initialization
 	//save current material color vector
@@ -59,9 +45,19 @@ void APuzzle1::BeginPlay(){
 	}
 	#pragma endregion
 
-	#pragma endregion
+	isPuzzleActorState = false;								// start out with actor's state as false
 
-	isPuzzleActorState = false;
+	//Deprecated
+	//puzzle1State = EPuzzle1State::Unchanged;
+
+	#pragma region Deprecated: Debug Switch
+	//if (puzzleState == EPuzzleState::Unchanged) {
+	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
+	//}
+	//else if (puzzleState == EPuzzleState::Changed) {
+	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
+	//}
+	#pragma endregion
 }
 
 // Called every frame
@@ -70,33 +66,28 @@ void APuzzle1::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	#pragma region Puzzle Interaction
-
 	if (isClicked) {
 		ChangeMaterialColor();
-	#pragma region Debug 
+		#pragma region Debug 
 		//UE_LOG(LogTemp, Warning, TEXT("isClicked"));						//Need asterisk because need pointer to print out character
-	#pragma endregion 
+		#pragma endregion 
 	}
 	else {
 		ChangeToOriginalColor();
-	#pragma region Debug 
+		#pragma region Debug 
 		//UE_LOG(LogTemp, Warning, TEXT("isUnClicked"));						//Need asterisk because need pointer to print out character
-	#pragma endregion 
+		#pragma endregion 
 	}
-
-
-
-#pragma region Debug Switch
+	#pragma endregion
+	
+	#pragma region Debug Switch
 	//if (puzzle1->puzzleState == EPuzzleState::Unchanged) {
 	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Unchanged"));
 	//}
 	//else if (puzzle1->puzzleState == EPuzzleState::Changed) {
 	//	UE_LOG(LogTemp, Warning, TEXT("puzzleState = Changed"));
 	//}
-#pragma endregion
-
-#pragma endregion
-
+	#pragma endregion
 }
 
 #pragma region Puzzle Interaction

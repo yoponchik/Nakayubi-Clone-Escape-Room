@@ -22,6 +22,7 @@ void APuzzleManager::BeginPlay()
 {
 	Super::BeginPlay();
 
+#pragma region Initializing Variables and Arrays
 	//Deprecated
 	//allPuzzle1Actors.Init(nullptr, allActors.Num());
 
@@ -34,6 +35,8 @@ void APuzzleManager::BeginPlay()
 	for (int32 i = 0; i < isPuzzle2Check.Num(); i++) {
 		isPuzzle2Check[i] = false;
 	}
+#pragma endregion
+
 
 	#pragma region Debug
 	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
@@ -46,9 +49,11 @@ void APuzzleManager::BeginPlay()
 	}
 	#pragma endregion
 
+#pragma region Add Actors from Level to arrays
 	AddPuzzle1();
 	AddPuzzle2();
 	AddDoor();
+#pragma endregion
 }
 
 // Called every frame
@@ -56,26 +61,23 @@ void APuzzleManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-#pragma region Deprecated
-
-	//if(!isPuzzle1Solved){
-	//	CheckPuzzle1State();
-	//}
-	//else{
-	//	return;
-	//}
-
+#pragma region Update Puzzle States
+//Constantly updates the states of puzzles; clicked, change color/position
+	UpdatePuzzle1State();
+	UpdatePuzzle2State();
 #pragma endregion
 
+#pragma region Check Puzzle States
+//Check if puzzle state and puzzle manager's solution matches
 	CheckPuzzle1State();
-	UpdatePuzzle1State();
-
 	CheckPuzzle2State();
-	UpdatePuzzle2State();
+#pragma endregion
 
+//Open Doors
 	ConfirmPuzzle();
 }
 
+#pragma region Add Puzzles to Array
 void APuzzleManager::AddPuzzle1()
 {	
 	for (TActorIterator<APuzzle1> it(GetWorld()); it; ++it) {
@@ -84,6 +86,15 @@ void APuzzleManager::AddPuzzle1()
 	//UE_LOG(LogTemp,Warning,TEXT("size : %d"),allPuzzle1Actors.Num());
 }
 
+void APuzzleManager::AddPuzzle2()
+{
+	for (TActorIterator<APuzzle2> it(GetWorld()); it; ++it) {
+		allPuzzle2Actors.Add(*it);
+	}
+}
+#pragma endregion
+
+#pragma region Update Puzzle States
 void APuzzleManager::UpdatePuzzle1State()
 {
 	if(allPuzzle1Actors.Num() != puzzle1Solution.Num()){
@@ -100,7 +111,7 @@ void APuzzleManager::UpdatePuzzle1State()
 		}
 	}
 	
-
+	#pragma region Debug
 	//for (int32 i = 0; i < isPuzzle1Check.Num(); i++) {
 	//	if (isPuzzle1Check[i]) {
 	//		UE_LOG(LogTemp, Warning, TEXT("isPuzzle1Check:Index %d = true"), i);
@@ -109,26 +120,9 @@ void APuzzleManager::UpdatePuzzle1State()
 	//		UE_LOG(LogTemp, Warning, TEXT("isPuzzle1Check:Index %d = false"), i);
 	//	}
 	//}
+	#pragma endregion
 }
 
-void APuzzleManager::CheckPuzzle1State()
-{
-	for (int32 i = 0; i < isPuzzle1Check.Num(); i++) {
-		if(!isPuzzle1Check[i]){
-			isPuzzle1Solved = false;
-			break;
-		}
-
-		isPuzzle1Solved = true;
-	}
-}
-
-void APuzzleManager::AddPuzzle2()
-{
-	for (TActorIterator<APuzzle2> it(GetWorld()); it; ++it) {
-		allPuzzle2Actors.Add(*it);
-	}
-}
 
 void APuzzleManager::UpdatePuzzle2State()
 {
@@ -146,6 +140,20 @@ void APuzzleManager::UpdatePuzzle2State()
 		}
 	}
 }
+#pragma endregion
+
+#pragma region Check Puzzle States
+void APuzzleManager::CheckPuzzle1State()
+{
+	for (int32 i = 0; i < isPuzzle1Check.Num(); i++) {
+		if(!isPuzzle1Check[i]){
+			isPuzzle1Solved = false;
+			break;
+		}
+
+		isPuzzle1Solved = true;
+	}
+}
 
 void APuzzleManager::CheckPuzzle2State()
 {
@@ -158,7 +166,9 @@ void APuzzleManager::CheckPuzzle2State()
 		isPuzzle2Solved = true;
 	}
 }
+#pragma endregion
 
+#pragma region Door Functionality
 void APuzzleManager::AddDoor()
 {
 	for (TActorIterator<ADoor> it(GetWorld()); it; ++it) {
@@ -172,12 +182,16 @@ void APuzzleManager::ConfirmPuzzle()
 		UE_LOG(LogTemp, Warning, TEXT("Number of Door Actors and Solutions do not match. Check the details window."));
 		return;
 	}
+
+	//Door1
 	if(isPuzzle1Solved){
 		allDoorActors[0]->OpenDoor();
 	}
 	else{
 		allDoorActors[0]->CloseDoor();
 	}	
+	
+	//Door2
 	if(isPuzzle2Solved){
 		allDoorActors[1]->OpenDoor();
 	}
@@ -185,8 +199,9 @@ void APuzzleManager::ConfirmPuzzle()
 		allDoorActors[1]->CloseDoor();
 	}
 }
+#pragma endregion
 
-#pragma region Deprecated
+#pragma region Deprecated - Manual Array Assignment for Puzzle Actors
 	//if(allActors.Num() != allPuzzle1Actors.Num()){
 	//	UE_LOG(LogTemp, Warning, TEXT("Number of Puzzle Actors and Solutions do not match. Check the details window."));
 	//	return;

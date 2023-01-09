@@ -29,16 +29,19 @@ void APuzzle2::BeginPlay()
 	Super::BeginPlay();
 
 #pragma region Puzzle Interaction
-	//puzzle2State = EPuzzle2State::Unchanged;
-
+	//reset original position
 	originalPosition = GetActorLocation();
 #pragma endregion
+
+	//deprecated
+	//puzzle2State = EPuzzle2State::Unchanged;
 }
 
 // Called every frame
 void APuzzle2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 #pragma region Puzzle Interaction
 	if (isClicked) {
 		MovePosition();
@@ -48,25 +51,21 @@ void APuzzle2::Tick(float DeltaTime)
 		MoveToOriginalPosition();
 		//UE_LOG(LogTemp, Warning, TEXT("isUnClicked"));						//Need asterisk because need pointer to print out character
 	}
-
 #pragma endregion
 }
 
 #pragma region Puzzle Interaction
-
 void APuzzle2::MovePosition()
 {
-	isPuzzleActorState = true;
+	isPuzzleActorState = true;									//change state to true when clicked from AMyCharacter
 
-
-	SetActorLocation(originalPosition + offsetPosition);
+	SetActorLocation(originalPosition + offsetPosition);		//move actor by offset
 }
 
 void APuzzle2::MoveToOriginalPosition()
 {
-	isPuzzleActorState = false;
+	isPuzzleActorState = false;									//change state to true when clicked from AMyCharacter
 
-	SetActorLocation(originalPosition);
+	SetActorLocation(originalPosition);							//move character back to original position
 }
-
 #pragma endregion

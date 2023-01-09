@@ -30,23 +30,23 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 #pragma region Puzzle Interaction
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSettings)
 	class UStaticMeshComponent* meshComp;
-
-	bool isClicked;
 
 	void MovePosition();
 	void MoveToOriginalPosition();
 
-	//EPuzzle2State puzzle2State;
-
-	FVector originalPosition;
 	FVector offsetPosition = FVector(0,0,50);
-
-
 
 	UPROPERTY(EditAnywhere, Category = Puzzle)
 	bool isPuzzleActorState;
+
+	bool isClicked;
+
+	//deprecated
+	//EPuzzle2State puzzle2State;
 #pragma  endregion
+
+private:
+	FVector originalPosition;
 };

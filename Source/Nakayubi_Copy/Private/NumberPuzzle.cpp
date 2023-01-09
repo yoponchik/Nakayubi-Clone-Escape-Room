@@ -4,9 +4,13 @@
 #include "NumberPuzzle.h"
 #include "Components/StaticMeshComponent.h"
 #include "UObject/ConstructorHelpers.h"
-#include "MyPlayer.h"
 #include "MyGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
+
+//This script has a lot of errors
+//=======================================================
+//=======================================================
+//=======================================================
 
 // Sets default values
 ANumberPuzzle::ANumberPuzzle()

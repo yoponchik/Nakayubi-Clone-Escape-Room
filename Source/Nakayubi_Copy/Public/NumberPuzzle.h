@@ -6,6 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "NumberPuzzle.generated.h"
 
+//This script has a lot of errors
+//=======================================================
+//=======================================================
+//=======================================================
+
 UCLASS()
 class NAKAYUBI_COPY_API ANumberPuzzle : public AActor
 {
@@ -32,7 +37,6 @@ public:
 	int32 count;
 
 	float roundCount;
-
 
 	class AMyGameModeBase* gm;
 };

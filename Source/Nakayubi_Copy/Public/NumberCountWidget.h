@@ -9,6 +9,12 @@
 /**
  * 
  */
+
+ //This script has a lot of errors
+//=======================================================
+//=======================================================
+//=======================================================
+
 UCLASS()
 class NAKAYUBI_COPY_API UNumberCountWidget : public UUserWidget
 {
@@ -21,5 +27,4 @@ public:
 
 	void PrintNumberCount();
 
-	
 };

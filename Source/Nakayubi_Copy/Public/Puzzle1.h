@@ -33,16 +33,17 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSettings)
 	class UStaticMeshComponent* meshComp;
 
-	bool isClicked;
-
 	void ChangeMaterialColor();
 	void ChangeToOriginalColor();
 
-	//EPuzzle1State puzzle1State;
-#pragma endregion
-
 	UPROPERTY(EditAnywhere, Category = Puzzle)
 	bool isPuzzleActorState;
+
+	bool isClicked;
+
+	//deprecated
+	//EPuzzle1State puzzle1State;					
+#pragma endregion
 
 private:
 
