@@ -33,15 +33,21 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
 	class UInputAction* iAVertical;	
+	
+	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
+	class UInputAction* iAClick;	
 
 
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
 	class UInputMappingContext* iMCMyMapping;
 
+
+
 	float hori;
 
 	float verti;
-	
+
+	UFUNCTION(BlueprintCallable)
 	void Horizontal(const FInputActionValue& value);	
 	UFUNCTION(BlueprintCallable)
 	void Vertical(const FInputActionValue& value);
@@ -54,4 +60,20 @@ public:
 
 	UPROPERTY()
 	ARealPlayer* me;
+
+	bool isPlayerClicked;
+
+	class AMyGameModeBase* gm;
+
+
+	class AActor* clickedActor;
+
+	UFUNCTION(BlueprintCallable)
+	void Click();
+	void UnClick();
+
+	void CheckPuzzleType();
+
+	APlayerController* playerCon;
+
 };

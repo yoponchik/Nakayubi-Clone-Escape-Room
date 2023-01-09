@@ -5,7 +5,12 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
-
+#include "MyPlayer.h"
+#include "Kismet/GameplayStatics.h"
+#include "Puzzle1.h"
+#include "Puzzle2.h"
+#include "NumberPuzzle.h"
+#include "MyGameModeBase.h"
 
 // Sets default values
 ARealPlayer::ARealPlayer()
@@ -20,7 +25,7 @@ void ARealPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	APlayerController* playerCon = Cast<APlayerController>(GetController());
+	playerCon = Cast<APlayerController>(GetController());
 	if (playerCon != nullptr) {
 		UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerCon->GetLocalPlayer());
 
@@ -44,6 +49,22 @@ void ARealPlayer::Tick(float DeltaTime)
 	direction.Normalize();
 	FVector dir = GetActorLocation() + direction * moveSpeed * DeltaTime;
 	SetActorLocation(dir, true);
+
+//	FHitResult hitResult;
+//	const ETraceTypeQuery TraceChannel = UEngineTypes::ConvertToTraceType((ECC_Visibility));
+//
+//	//If Hit result has the channel trace channel, if it is hit result...
+//	if (playerCon->GetHitResultUnderCursorByChannel(TraceChannel, true, hitResult)) {
+//
+//		if (!isPlayerClicked) { return; }
+//		clickedActor = hitResult.GetActor();									//if Clicked, get the actor
+//#pragma region Debug
+//		//Get Actor Name
+//		//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
+//#pragma endregion
+//
+//		CheckPuzzleType();
+//	}
 }
 
 // Called to bind functionality to input
@@ -61,6 +82,12 @@ void ARealPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAxis("Turn", this, &ARealPlayer::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &ARealPlayer::AddControllerPitchInput);
+
+	//PlayerInputComponent->BindAction("Click", IE_Pressed, this, &ARealPlayer::Click);
+	//PlayerInputComponent->BindAction("Click", IE_Released, this, &ARealPlayer::UnClick);
+
+	enhancedInputComponent->BindAction(iAClick, ETriggerEvent::Triggered, this, &ARealPlayer::Click);
+	//enhancedInputComponent->BindAction(iAClick, ETriggerEvent::Completed, this, &ARealPlayer::Click);
 }
 
 void ARealPlayer::Horizontal(const FInputActionValue& value)
@@ -83,4 +110,86 @@ void ARealPlayer::Turn(float value){
 
 void ARealPlayer::LookUp(float value){
 	me->AddControllerPitchInput(value);
+}
+
+void ARealPlayer::Click() {
+	isPlayerClicked = true;
+#pragma region Debug
+	UE_LOG(LogTemp, Warning, TEXT("Click"));
+#pragma endregion
+
+	FHitResult hitResult;
+	const ETraceTypeQuery TraceChannel = UEngineTypes::ConvertToTraceType((ECC_Visibility));
+
+	//If Hit result has the channel trace channel, if it is hit result...
+	if (playerCon->GetHitResultUnderCursorByChannel(TraceChannel, true, hitResult)) {
+
+		if (!isPlayerClicked) { return; }
+		clickedActor = hitResult.GetActor();									//if Clicked, get the actor
+#pragma region Debug
+		//Get Actor Name
+		//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
+#pragma endregion
+
+		CheckPuzzleType();
+	}
+}
+
+void ARealPlayer::UnClick() {
+	isPlayerClicked = false;
+#pragma region Debug
+	//UE_LOG(LogTemp, Warning, TEXT("Click End"));
+#pragma endregion
+}
+
+void ARealPlayer::CheckPuzzleType()
+{
+	if (clickedActor->IsA<APuzzle1>()) {									//if clickedActor is puzzle1
+	//if (Cast<APuzzle1>(clickedActor)) {									//Either works
+
+#pragma region Debug
+			//Extracted Actor is APuzzle1 class
+		UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+		APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor);
+		puzzle1->isClicked = !(puzzle1->isClicked);
+		//puzzle1->puzzle1State = EPuzzle1State::Changed;					//deprecated
+	}
+
+	if (clickedActor->IsA<APuzzle2>()) {									//if clickedActor is puzzle1
+
+#pragma region Debug
+			//Extracted Actor is APuzzle1 class
+		UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE2"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+		APuzzle2* puzzle2 = Cast<APuzzle2>(clickedActor);
+		puzzle2->isClicked = !(puzzle2->isClicked);
+		//puzzle2->puzzle2State = EPuzzle2State::Changed;					//deprecated
+	}
+
+	if (clickedActor->IsA<ANumberPuzzle>()) {									//if clickedActor is puzzle1
+#pragma region Debug
+		UE_LOG(LogTemp, Warning, TEXT("iS A NumberPuzzle"));						//Need asterisk because need pointer to print out character
+#pragma endregion
+
+		ANumberPuzzle* numpuzzle = Cast<ANumberPuzzle>(clickedActor);
+
+
+		//to tell the numpuzzle that it is clicked
+		numpuzzle->isClicked = !(numpuzzle->isClicked);
+
+		//temporary
+		//Count up every click
+		(numpuzzle->roundCount++);
+		(numpuzzle->roundCount) /= (11.0f);
+
+		if ((numpuzzle->roundCount) >= 0.1f) {
+			numpuzzle->count++;
+			(numpuzzle->roundCount) = 0;
+		}
+
+		//UE_LOG(LogTemp, Warning, TEXT("Count: %f"), numpuzzle->roundCount);						
+		UE_LOG(LogTemp, Warning, TEXT("Count: %d"), numpuzzle->count);
+
+	}
 }

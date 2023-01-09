@@ -36,10 +36,10 @@ public:
 private:
 	class AActor* clickedActor;
 
-	void Click();
-	void UnClick();
+	//void Click();
+	//void UnClick();
 
-	void CheckPuzzleType();
+	//void CheckPuzzleType();
 
 
 
