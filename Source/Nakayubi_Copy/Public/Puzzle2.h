@@ -44,5 +44,9 @@ public:
 	FVector originalPosition;
 	FVector offsetPosition = FVector(0,0,50);
 
+
+
+	UPROPERTY(EditAnywhere, Category = Puzzle)
+	bool isPuzzleActorState;
 #pragma  endregion
 };

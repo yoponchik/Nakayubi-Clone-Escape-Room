@@ -84,16 +84,7 @@ void APuzzle1::Tick(float DeltaTime)
 	#pragma endregion 
 	}
 
-	//switch (puzzle1State) {
-	//	case EPuzzle1State::Unchanged:
-	//		ChangeToOriginalColor();
-	//		break;
-	//	case EPuzzle1State::Changed:
-	//		ChangeMaterialColor();
-	//		break;
-	//	default:
-	//		break;
-	//}
+
 
 #pragma region Debug Switch
 	//if (puzzle1->puzzleState == EPuzzleState::Unchanged) {

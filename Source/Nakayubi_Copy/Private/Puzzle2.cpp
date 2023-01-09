@@ -50,16 +50,6 @@ void APuzzle2::Tick(float DeltaTime)
 		//UE_LOG(LogTemp, Warning, TEXT("isUnClicked"));						//Need asterisk because need pointer to print out character
 	}
 
-	//switch (puzzle2State) {
-	//	case EPuzzle2State::Unchanged:
-	//		MoveToOriginalPosition();
-	//		break;
-	//	case EPuzzle2State::Changed:
-	//		MovePosition();
-	//		break;
-	//	default:
-	//		break;
-	//}
 #pragma endregion
 }
 
@@ -67,11 +57,16 @@ void APuzzle2::Tick(float DeltaTime)
 
 void APuzzle2::MovePosition()
 {
+	isPuzzleActorState = true;
+
+
 	SetActorLocation(originalPosition + offsetPosition);
 }
 
 void APuzzle2::MoveToOriginalPosition()
 {
+	isPuzzleActorState = false;
+
 	SetActorLocation(originalPosition);
 }
 

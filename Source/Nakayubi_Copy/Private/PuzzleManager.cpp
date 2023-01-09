@@ -3,6 +3,8 @@
 
 #include "PuzzleManager.h"
 #include "Puzzle1.h"
+#include "Puzzle2.h"
+
 #include "EngineUtils.h"
 
 // Sets default values
@@ -22,9 +24,13 @@ void APuzzleManager::BeginPlay()
 	//allPuzzle1Actors.Init(nullptr, allActors.Num());
 
 	isPuzzle1Check.Init(false, puzzle1Solution.Num());
+	isPuzzle2Check.Init(false, puzzle2Solution.Num());
 	
 	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
 		isPuzzle1Check[i] = false;
+	}	
+	for (int32 i = 0; i < isPuzzle2Check.Num(); i++) {
+		isPuzzle2Check[i] = false;
 	}
 
 	#pragma region Debug
@@ -38,8 +44,8 @@ void APuzzleManager::BeginPlay()
 	}
 	#pragma endregion
 
-	AddPuzzle();
-
+	AddPuzzle1();
+	AddPuzzle2();
 }
 
 // Called every frame
@@ -61,9 +67,11 @@ void APuzzleManager::Tick(float DeltaTime)
 	CheckPuzzle1State();
 	UpdatePuzzle1State();
 
+	CheckPuzzle2State();
+	UpdatePuzzle2State();
 }
 
-void APuzzleManager::AddPuzzle()
+void APuzzleManager::AddPuzzle1()
 {	
 	for (TActorIterator<APuzzle1> it(GetWorld()); it; ++it) {
 		allPuzzle1Actors.Add(*it);
@@ -107,6 +115,42 @@ void APuzzleManager::CheckPuzzle1State()
 		}
 
 		isPuzzle1Solved = true;
+	}
+}
+
+void APuzzleManager::AddPuzzle2()
+{
+	for (TActorIterator<APuzzle2> it(GetWorld()); it; ++it) {
+		allPuzzle2Actors.Add(*it);
+	}
+}
+
+void APuzzleManager::UpdatePuzzle2State()
+{
+	if (allPuzzle2Actors.Num() != puzzle2Solution.Num()) {
+		UE_LOG(LogTemp, Warning, TEXT("Number of Puzzle Actors and Solutions do not match. Check the details window."));
+		return;
+	}
+
+	for (int32 i = 0; i < allPuzzle2Actors.Num(); i++) {
+		if ((allPuzzle2Actors[i]->isPuzzleActorState) == puzzle2Solution[i]) {
+			isPuzzle2Check[i] = true;
+		}
+		else {
+			isPuzzle2Check[i] = false;
+		}
+	}
+}
+
+void APuzzleManager::CheckPuzzle2State()
+{
+	for (int32 i = 0; i < isPuzzle2Check.Num(); i++) {
+		if (!isPuzzle2Check[i]) {
+			isPuzzle2Solved = false;
+			break;
+		}
+
+		isPuzzle2Solved = true;
 	}
 }
 
