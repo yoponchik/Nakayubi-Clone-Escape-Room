@@ -35,6 +35,10 @@ public:
 	class UInputAction* iAVertical;	
 	
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
+	class UInputAction* iAMovement;	
+
+
+	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
 	class UInputAction* iAClick;	
 
 
@@ -46,6 +50,9 @@ public:
 	float hori;
 
 	float verti;
+
+	UFUNCTION(BlueprintCallable)
+	void Move(const FInputActionValue& value);
 
 	UFUNCTION(BlueprintCallable)
 	void Horizontal(const FInputActionValue& value);	

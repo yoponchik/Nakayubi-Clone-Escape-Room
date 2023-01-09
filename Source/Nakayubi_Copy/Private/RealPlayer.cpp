@@ -74,26 +74,45 @@ void ARealPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	UEnhancedInputComponent* enhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-	enhancedInputComponent->BindAction(iAHorizontal, ETriggerEvent::Triggered, this, &ARealPlayer::Horizontal);
-	enhancedInputComponent->BindAction(iAHorizontal, ETriggerEvent::Completed, this, &ARealPlayer::Horizontal);
-	
-	enhancedInputComponent->BindAction(iAVertical, ETriggerEvent::Triggered, this, &ARealPlayer::Vertical);
-	enhancedInputComponent->BindAction(iAVertical, ETriggerEvent::Completed, this, &ARealPlayer::Vertical);
+	//enhancedInputComponent->BindAction(iAHorizontal, ETriggerEvent::Triggered, this, &ARealPlayer::Horizontal);
+	//enhancedInputComponent->BindAction(iAHorizontal, ETriggerEvent::Completed, this, &ARealPlayer::Horizontal);
+	//
+	//enhancedInputComponent->BindAction(iAVertical, ETriggerEvent::Triggered, this, &ARealPlayer::Vertical);
+	//enhancedInputComponent->BindAction(iAVertical, ETriggerEvent::Completed, this, &ARealPlayer::Vertical);
 
 	PlayerInputComponent->BindAxis("Turn", this, &ARealPlayer::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &ARealPlayer::AddControllerPitchInput);
 
 	//PlayerInputComponent->BindAction("Click", IE_Pressed, this, &ARealPlayer::Click);
 	//PlayerInputComponent->BindAction("Click", IE_Released, this, &ARealPlayer::UnClick);
+	
+	enhancedInputComponent->BindAction(iAMovement, ETriggerEvent::Triggered, this, &ARealPlayer::Move);
 
 	enhancedInputComponent->BindAction(iAClick, ETriggerEvent::Triggered, this, &ARealPlayer::Click);
 	//enhancedInputComponent->BindAction(iAClick, ETriggerEvent::Completed, this, &ARealPlayer::Click);
+}
+
+void ARealPlayer::Move(const FInputActionValue& value)
+{
+	const FVector2D movementVector = value.Get<FVector2D>();
+
+	const FRotator rotation = Controller->GetControlRotation();
+	const FRotator yawRotation(0.f, rotation.Yaw, 0.f);
+
+	const FVector forwardDirection = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(forwardDirection, movementVector.Y);
+	const FVector rightDirection = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(rightDirection, movementVector.X);
+
+	UE_LOG(LogTemp, Warning, TEXT("Move"));
+
 }
 
 void ARealPlayer::Horizontal(const FInputActionValue& value)
 {
 	hori = value.Get<float>();
 	UE_LOG(LogTemp, Warning, TEXT("h: %.4f"), hori);
+	
 	direction.Y = hori;
 }
 
