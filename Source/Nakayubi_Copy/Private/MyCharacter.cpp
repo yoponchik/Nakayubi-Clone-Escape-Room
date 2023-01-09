@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "RealPlayer.h"
+#include "MyCharacter.h"
 #include "GameFramework/Controller.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
@@ -13,18 +13,18 @@
 #include "MyGameModeBase.h"
 
 // Sets default values
-ARealPlayer::ARealPlayer()
+AMyCharacter::AMyCharacter()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
 // Called when the game starts or when spawned
-void ARealPlayer::BeginPlay()
+void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	playerCon = Cast<APlayerController>(GetController());
 	if (playerCon != nullptr) {
 		UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerCon->GetLocalPlayer());
@@ -36,59 +36,35 @@ void ARealPlayer::BeginPlay()
 	}
 
 	playerCon->bShowMouseCursor = true;
-	//playerCon->bEnableClickEvents = true;
-	//playerCon->bEnableMouseOverEvents = true;
-
 }
 
 // Called every frame
-void ARealPlayer::Tick(float DeltaTime)
+void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	direction.Normalize();
 	FVector dir = GetActorLocation() + direction * moveSpeed * DeltaTime;
 	SetActorLocation(dir, true);
 
-//	FHitResult hitResult;
-//	const ETraceTypeQuery TraceChannel = UEngineTypes::ConvertToTraceType((ECC_Visibility));
-//
-//	//If Hit result has the channel trace channel, if it is hit result...
-//	if (playerCon->GetHitResultUnderCursorByChannel(TraceChannel, true, hitResult)) {
-//
-//		if (!isPlayerClicked) { return; }
-//		clickedActor = hitResult.GetActor();									//if Clicked, get the actor
-//#pragma region Debug
-//		//Get Actor Name
-//		//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
-//#pragma endregion
-//
-//		CheckPuzzleType();
-//	}
 }
 
 // Called to bind functionality to input
-void ARealPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAxis("Turn", this, &AMyCharacter::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &AMyCharacter::AddControllerPitchInput);
+
 	UEnhancedInputComponent* enhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-	//enhancedInputComponent->BindAction(iAHorizontal, ETriggerEvent::Triggered, this, &ARealPlayer::Horizontal);
-	//enhancedInputComponent->BindAction(iAHorizontal, ETriggerEvent::Completed, this, &ARealPlayer::Horizontal);
-	//
-	//enhancedInputComponent->BindAction(iAVertical, ETriggerEvent::Triggered, this, &ARealPlayer::Vertical);
-	//enhancedInputComponent->BindAction(iAVertical, ETriggerEvent::Completed, this, &ARealPlayer::Vertical);
+	enhancedInputComponent->BindAction(iAMovement, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
 
-	PlayerInputComponent->BindAxis("Turn", this, &ARealPlayer::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("LookUp", this, &ARealPlayer::AddControllerPitchInput);
-
-	enhancedInputComponent->BindAction(iAMovement, ETriggerEvent::Triggered, this, &ARealPlayer::Move);
-
-	enhancedInputComponent->BindAction(iAClick, ETriggerEvent::Triggered, this, &ARealPlayer::Click);
+	enhancedInputComponent->BindAction(iAClick, ETriggerEvent::Triggered, this, &AMyCharacter::Click);
 }
 
-void ARealPlayer::Move(const FInputActionValue& value)
+
+void AMyCharacter::Move(const FInputActionValue& value)
 {
 	const FVector2D movementVector = value.Get<FVector2D>();
 
@@ -104,30 +80,30 @@ void ARealPlayer::Move(const FInputActionValue& value)
 
 }
 
-void ARealPlayer::Horizontal(const FInputActionValue& value)
+void AMyCharacter::Horizontal(const FInputActionValue& value)
 {
 	hori = value.Get<float>();
 	UE_LOG(LogTemp, Warning, TEXT("h: %.4f"), hori);
-	
+
 	direction.Y = hori;
 }
 
-void ARealPlayer::Vertical(const FInputActionValue& value)
+void AMyCharacter::Vertical(const FInputActionValue& value)
 {
 	verti = value.Get<float>();
 	UE_LOG(LogTemp, Warning, TEXT("h: %.4f"), verti);
 	direction.X = verti;
 }
 
-void ARealPlayer::Turn(float value){
+void AMyCharacter::Turn(float value) {
 	me->AddControllerYawInput(value);
 }
 
-void ARealPlayer::LookUp(float value){
+void AMyCharacter::LookUp(float value) {
 	me->AddControllerPitchInput(value);
 }
 
-void ARealPlayer::Click() {
+void AMyCharacter::Click() {
 	isPlayerClicked = true;
 #pragma region Debug
 	UE_LOG(LogTemp, Warning, TEXT("Click"));
@@ -150,14 +126,14 @@ void ARealPlayer::Click() {
 	}
 }
 
-void ARealPlayer::UnClick() {
+void AMyCharacter::UnClick() {
 	isPlayerClicked = false;
 #pragma region Debug
 	//UE_LOG(LogTemp, Warning, TEXT("Click End"));
 #pragma endregion
 }
 
-void ARealPlayer::CheckPuzzleType()
+void AMyCharacter::CheckPuzzleType()
 {
 	if (clickedActor->IsA<APuzzle1>()) {									//if clickedActor is puzzle1
 	//if (Cast<APuzzle1>(clickedActor)) {									//Either works
