@@ -43,6 +43,8 @@
 
 ![solvePuzzle2Solution](https://user-images.githubusercontent.com/57009810/212022129-76cea5a8-b232-4c21-996c-9540cd740886.gif)
 
+![Place Door In Scene](https://user-images.githubusercontent.com/57009810/212032665-c8ee8b9f-6d3e-4fc9-999f-9b9eedf8702a.gif)
+
 ![Place Door](https://user-images.githubusercontent.com/57009810/212032272-439181a3-ea6a-49d9-a6da-4536d3a9d483.gif)
 
 
