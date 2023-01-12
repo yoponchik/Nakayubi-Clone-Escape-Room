@@ -43,8 +43,6 @@
 
 ![solvePuzzle2Solution](https://user-images.githubusercontent.com/57009810/212022129-76cea5a8-b232-4c21-996c-9540cd740886.gif)
 
-![AddDoor](https://user-images.githubusercontent.com/57009810/212031919-be4e0b5c-7bc2-451a-aeb3-9ba62c5a1989.gif)
-
-
+![AddDoor](https://user-images.githubusercontent.com/57009810/212032160-a5367ee3-7978-4883-b16e-e5fc426427f1.gif)
 
 
