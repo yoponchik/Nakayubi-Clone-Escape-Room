@@ -2,6 +2,13 @@
 
 <h2>1. Controls</h2>
 
+WASD: Movement
+
+Mouse Drag: Look Around
+
+Mouse Click: Puzzle Interaction
+
+
 <h2>2. Settings</h2>
 
 <h2>3. Puzzle Interaction</h2>
