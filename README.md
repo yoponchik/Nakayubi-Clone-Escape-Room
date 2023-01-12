@@ -1,5 +1,8 @@
 # Escape Room
 
+<h2>1. Controls</h2>
+
+
 ![Click](https://user-images.githubusercontent.com/57009810/212019193-107f3603-3da4-44da-b183-d457f0822cbf.gif)
 
 ![ClickMove](https://user-images.githubusercontent.com/57009810/212019198-e76a6c60-11d2-4151-87eb-ba78ba98ef35.gif)
