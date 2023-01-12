@@ -1,4 +1,4 @@
-# Project-1
+# Escape Room
 
 ![Click](https://user-images.githubusercontent.com/57009810/212019193-107f3603-3da4-44da-b183-d457f0822cbf.gif)
 
