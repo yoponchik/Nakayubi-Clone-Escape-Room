@@ -14,13 +14,11 @@
 
 <h3>Puzzle1 - Color</h3>
 
-
 ![solvePuzzle](https://user-images.githubusercontent.com/57009810/212019219-cdda69a6-d438-4533-a439-0840d45316ee.gif)
 
 ![solvePuzzle1Solution](https://user-images.githubusercontent.com/57009810/212022114-c8dc6d2d-ccfa-4b18-9e65-d657b9932d35.gif)
 
 <h3>Puzzle2 - Move</h3>
-
 
 ![solvePuzzle2](https://user-images.githubusercontent.com/57009810/212019232-7e8160cc-eeb1-405c-9a7d-00c45efc0a4d.gif)
 
@@ -28,6 +26,9 @@
 
 <h3>Puzzle3 - Number</h3>
 
+<h3>Add Actors to Arrays</h3>
+
+![AddActors](https://user-images.githubusercontent.com/57009810/212027259-ce577e1a-a89d-4787-9fe2-ce521da2c601.gif)
 
 
 
