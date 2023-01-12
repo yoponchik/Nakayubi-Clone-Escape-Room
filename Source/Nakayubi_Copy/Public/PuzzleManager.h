@@ -26,46 +26,52 @@ public:
 #pragma region Puzzle 1
 	TArray <class APuzzle1*> allPuzzle1Actors;
 
-	UPROPERTY(EditAnywhere, Category = Puzzle)
+	UPROPERTY(EditAnywhere, Category = "Puzzle | Puzzle1")
 	TArray <bool> puzzle1Solution;
 
-	UPROPERTY(VisibleAnywhere, Category = Puzzle)
+	UPROPERTY(EditAnywhere, Category = "Puzzle | Puzzle1")
 	TArray <bool> isPuzzle1Check;
 
-	UPROPERTY(VisibleAnywhere, Category = Puzzle)
+	UPROPERTY(EditAnywhere, Category = "Puzzle | Puzzle1")
 	bool isPuzzle1Solved;
-
-	void AddPuzzle1();
-	void UpdatePuzzle1State();
-	void CheckPuzzle1State();
 #pragma endregion
 
 #pragma region Puzzle 2
 	TArray <class APuzzle2*> allPuzzle2Actors;
 
-	UPROPERTY(EditAnywhere, Category = Puzzle)
+	UPROPERTY(EditAnywhere, Category = "Puzzle | Puzzle2")
 	TArray <bool> puzzle2Solution;
 
-	UPROPERTY(VisibleAnywhere, Category = Puzzle)
-		TArray <bool> isPuzzle2Check;
+	UPROPERTY(EditAnywhere, Category = "Puzzle | Puzzle2")
+	TArray <bool> isPuzzle2Check;
 
-	UPROPERTY(VisibleAnywhere, Category = Puzzle)
-		bool isPuzzle2Solved;
-
-	void AddPuzzle2();
-	void UpdatePuzzle2State();
-	void CheckPuzzle2State();
+	UPROPERTY(EditAnywhere, Category = "Puzzle | Puzzle2")
+	bool isPuzzle2Solved;
 #pragma endregion
 
 #pragma region Doors
 	UPROPERTY(EditAnywhere, Category = Puzzle)
 	TArray <class ADoor*> allDoorActors;
-
-	void AddDoor();
-	void ConfirmPuzzle();
 #pragma endregion
 
 	//Deprecated
 	//UPROPERTY(EditAnywhere, Category = Puzzle)
 	//TArray <class AActor*> allActors;
+
+private: 
+	//Add Actors to Array
+	void AddPuzzle1();
+	void AddPuzzle2();
+	void AddDoor();
+
+	//Constantly check puzzle states; update check array
+	void UpdatePuzzle1State();
+	void UpdatePuzzle2State();
+
+	//Check array 
+	void CheckPuzzle1State();
+	void CheckPuzzle2State();
+
+	//Doors
+	void ConfirmPuzzle();
 };

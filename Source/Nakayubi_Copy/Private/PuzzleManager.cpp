@@ -39,21 +39,21 @@ void APuzzleManager::BeginPlay()
 
 
 	#pragma region Debug
-	for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
-		if(isPuzzle1Check[i]){
-			UE_LOG(LogTemp, Warning, TEXT("isPuzzle1Check:Index %d = true"), i);
-		}
-		else{
-			UE_LOG(LogTemp, Warning, TEXT("isPuzzle1Check:Index %d = false"), i);
-		}
-	}
+	//for(int32 i = 0; i < isPuzzle1Check.Num(); i++){
+	//	if(isPuzzle1Check[i]){
+	//		UE_LOG(LogTemp, Warning, TEXT("isPuzzle1Check:Index %d = true"), i);
+	//	}
+	//	else{
+	//		UE_LOG(LogTemp, Warning, TEXT("isPuzzle1Check:Index %d = false"), i);
+	//	}
+	//}
 	#pragma endregion
 
-#pragma region Add Actors from Level to arrays
+	#pragma region Add Actors from Level to arrays
 	AddPuzzle1();
 	AddPuzzle2();
 	AddDoor();
-#pragma endregion
+	#pragma endregion
 }
 
 // Called every frame
@@ -73,7 +73,7 @@ void APuzzleManager::Tick(float DeltaTime)
 	CheckPuzzle2State();
 #pragma endregion
 
-//Open Doors
+	//Open Doors
 	ConfirmPuzzle();
 }
 

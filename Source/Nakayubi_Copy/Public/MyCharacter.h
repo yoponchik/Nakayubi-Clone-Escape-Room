@@ -27,8 +27,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnywhere, Category = "Player Settings | Movement")
+	float moveSpeed = 800;
 private:
-#pragma region Enhanced Input
+	#pragma region Enhanced Input
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
 	class UInputAction* iAMovement;
 
@@ -37,20 +39,21 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = PlayerSettings)
 	class UInputMappingContext* iMCMyMapping;
+#pragma endregion
 
-	UFUNCTION(BlueprintCallable)
+	#pragma region Movement
+	UFUNCTION()
 	void Move(const FInputActionValue& value);
 
 	void Turn(float value);
 	void LookUp(float value);
+	#pragma endregion
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void Click();
-#pragma endregion
 
 	void CheckPuzzleType();								//Checks which class the puzzle is when clicked
 
-	UPROPERTY()
 	AMyCharacter* me;									//For turning the camera
 
 	APlayerController* playerCon;						//For mapping the enhanced input
@@ -58,8 +61,4 @@ private:
 	class AActor* clickedActor;
 
 	FVector direction;
-
-	float moveSpeed = 800;
-
-	bool isPlayerClicked;
 };

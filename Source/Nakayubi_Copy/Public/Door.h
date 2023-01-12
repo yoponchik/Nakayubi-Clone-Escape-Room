@@ -23,15 +23,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerSettings)
 	class UStaticMeshComponent* meshComp;
 
-	void OpenDoor();
-	void CloseDoor();
-
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DoorSettings)
 	FVector offsetPosition = FVector(0, 0, 50);										//How much the door will open
 
-	bool isClicked;																	//To check if the cursor has clicked the actor
-
+	void OpenDoor();
+	void CloseDoor();
+	
 	//Deprecated
 	//EPuzzle2State puzzle2State;
 private:

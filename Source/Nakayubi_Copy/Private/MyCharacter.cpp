@@ -94,7 +94,6 @@ void AMyCharacter::LookUp(float value) {
 
 #pragma region Click
 void AMyCharacter::Click() {
-	isPlayerClicked = true;
 	#pragma region Debug
 	//UE_LOG(LogTemp, Warning, TEXT("Click"));
 	#pragma endregion
@@ -105,12 +104,11 @@ void AMyCharacter::Click() {
 	//If Hit result has the channel trace channel, if it is hit result...
 	if (playerCon->GetHitResultUnderCursorByChannel(TraceChannel, true, hitResult)) {
 
-		if (!isPlayerClicked) { return; }
 		clickedActor = hitResult.GetActor();									//if Clicked, get the actor
-	#pragma region Debug
+		#pragma region Debug
 		//Get Actor Name
 		//UE_LOG(LogTemp, Warning, TEXT("%s"), *clickedActor->GetName());						//Need asterisk because need pointer to print out character
-	#pragma endregion
+		#pragma endregion
 
 		CheckPuzzleType();
 	}
@@ -122,33 +120,31 @@ void AMyCharacter::CheckPuzzleType()
 {
 	if (clickedActor->IsA<APuzzle1>()) {									//if clickedActor is puzzle1
 	//if (Cast<APuzzle1>(clickedActor)) {									//Either works
-
-#pragma region Debug
-			//Extracted Actor is APuzzle1 class
+		#pragma region Debug
+		//Extracted Actor is APuzzle1 class
 		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE1"));						//Need asterisk because need pointer to print out character
-#pragma endregion
+		#pragma endregion
+
 		APuzzle1* puzzle1 = Cast<APuzzle1>(clickedActor);
 		puzzle1->isClicked = !(puzzle1->isClicked);
 		//puzzle1->puzzle1State = EPuzzle1State::Changed;					//deprecated
 	}
 
-	if (clickedActor->IsA<APuzzle2>()) {									//if clickedActor is puzzle1
-
-#pragma region Debug
+	else if (clickedActor->IsA<APuzzle2>()) {									//if clickedActor is puzzle1
+		#pragma region Debug
 		//Extracted Actor is APuzzle1 class
 		//UE_LOG(LogTemp, Warning, TEXT("iS A PUZZLE2"));						//Need asterisk because need pointer to print out character
-#pragma endregion
+		#pragma endregion
 		APuzzle2* puzzle2 = Cast<APuzzle2>(clickedActor);
 		puzzle2->isClicked = !(puzzle2->isClicked);
 	}
 
-	if (clickedActor->IsA<ANumberPuzzle>()) {									//if clickedActor is puzzle1
-#pragma region Debug
+	else if (clickedActor->IsA<ANumberPuzzle>()) {									//if clickedActor is puzzle1
+		#pragma region Debug
 		//UE_LOG(LogTemp, Warning, TEXT("iS A NumberPuzzle"));						//Need asterisk because need pointer to print out character
-#pragma endregion
+		#pragma endregion
 
 		ANumberPuzzle* numpuzzle = Cast<ANumberPuzzle>(clickedActor);
-
 
 		//to tell the numpuzzle that it is clicked
 		numpuzzle->isClicked = !(numpuzzle->isClicked);
@@ -166,6 +162,10 @@ void AMyCharacter::CheckPuzzleType()
 		//UE_LOG(LogTemp, Warning, TEXT("Count: %f"), numpuzzle->roundCount);						
 		UE_LOG(LogTemp, Warning, TEXT("Count: %d"), numpuzzle->count);
 
+	}
+
+	else {
+		return;
 	}
 }
 #pragma endregion
