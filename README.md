@@ -27,22 +27,23 @@
 
 <h2>Setting Up Actors</h23>
 
+![Place Actor](https://user-images.githubusercontent.com/57009810/212030812-f12cb597-268c-490f-9d10-88952f9a431a.gif)
+
 <h3>Add Solutions</h3>
 
 ![AddSolutions](https://user-images.githubusercontent.com/57009810/212029348-11130440-f955-49a2-92f7-0b741239986b.gif)
 
 ![AddSolutions2](https://user-images.githubusercontent.com/57009810/212029358-105c330d-0596-4f78-a923-e2e0fde19f63.gif)
 
-
 <h3>Add Actors to Arrays</h3>
 
 ![AddActors](https://user-images.githubusercontent.com/57009810/212027259-ce577e1a-a89d-4787-9fe2-ce521da2c601.gif)
 
-
 ![solvePuzzle1Solution](https://user-images.githubusercontent.com/57009810/212022114-c8dc6d2d-ccfa-4b18-9e65-d657b9932d35.gif)
 
-
 ![solvePuzzle2Solution](https://user-images.githubusercontent.com/57009810/212022129-76cea5a8-b232-4c21-996c-9540cd740886.gif)
+
+![AddDoor](https://user-images.githubusercontent.com/57009810/212030035-30d61358-408b-4e0e-84db-d4918d93a4ed.gif)
 
 
 
