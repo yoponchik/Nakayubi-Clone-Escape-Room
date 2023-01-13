@@ -27,4 +27,6 @@ public:
 
 	void PrintNumberCount();
 
+
+	class AMyGameModeBase* gm;
 };

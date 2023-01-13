@@ -13,11 +13,11 @@
 
 void UNumberCountWidget::PrintNumberCount()
 {
-	AMyGameModeBase* gm = Cast<AMyGameModeBase>(UGameplayStatics::GetGameMode(this));
+	//AMyGameModeBase* gm = Cast<AMyGameModeBase>(UGameplayStatics::GetGameMode(this));
 
 	//this doesn't work for some reason??
 	//cause of crash
-	//AMyGameModeBase* gm = Cast<AMyGameModeBase>(GetWorld()->GetAuthGameMode());
+	gm = Cast<AMyGameModeBase>(GetWorld()->GetAuthGameMode());
 
 	if (gm == nullptr)
 	{
